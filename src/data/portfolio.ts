@@ -3,6 +3,7 @@ export interface Project {
   description: string
   tags: string[]
   github: string | null
+  collaborator?: string
   blogSlug: string
   featured?: boolean
 }
@@ -13,6 +14,7 @@ export const projects: Project[] = [
     description:
       'Personal CRM and content intelligence platform. 19 API routes, 41 React components, ~10,000 lines of TypeScript. AI post generation, scoring engine, and autopsy features.',
     tags: ['Next.js 14', 'TypeScript', 'Prisma', 'SQLite', 'Claude API'],
+    // TODO: add GitHub URL if/when repo is made public
     github: null,
     blogSlug: 'linkedin-growth-os',
     featured: true,
@@ -22,20 +24,23 @@ export const projects: Project[] = [
     description:
       'High-altitude balloon spectroscopy platform. Team lead. Launched to 100,000 ft.',
     tags: ['Python', 'Embedded'],
-    github: null,
+    github: 'https://github.com/broiisapro/Apex',
     blogSlug: 'apex',
   },
   {
     name: 'Crawl / OpenClaw',
     description: 'Autonomous SEO/GEO agentic SaaS. GenAI Genesis 2025.',
     tags: ['Next.js', 'LLMs', 'Scraping'],
-    github: null,
+    collaborator: 'Nitya Savaram',
+    // Co-built with Nitya Savaram — link to their repo, not broiisapro
+    github: 'https://github.com/Nityasav/openclawseo',
     blogSlug: 'crawl-openclaw',
   },
   {
     name: 'VantageAI',
     description: 'Fine-tuned LLM grader in active pilot with DECA Ontario.',
     tags: ['Fine-tuning', 'FastAPI', 'React'],
+    // TODO: add GitHub URL if/when repo is made public
     github: null,
     blogSlug: 'vantagei-deca-grader',
   },
@@ -43,7 +48,7 @@ export const projects: Project[] = [
     name: 'Pyros',
     description: 'Wildfire detection with AI voice agent. Hack Canada 2025.',
     tags: ['CV', 'Voice AI', 'Python'],
-    github: null,
+    github: 'https://github.com/broiisapro/HackCanada-NRM',
     blogSlug: 'pyros',
   },
   {
@@ -59,8 +64,7 @@ export const projects: Project[] = [
     description:
       'Real-time American Sign Language recognition via computer vision.',
     tags: ['MediaPipe', 'CV', 'Python'],
-    // Update with exact repo URL once known
-    github: 'https://github.com/broiisapro',
+    github: 'https://github.com/broiisapro/project-11---sign-language',
     blogSlug: 'asl-translator',
   },
   {
@@ -68,7 +72,7 @@ export const projects: Project[] = [
     description:
       'FIRST Robotics Competition. Blue Banner winner — first year competing.',
     tags: ['Robotics', 'C++'],
-    github: null,
+    github: 'https://github.com/9621-Payload/2024-Game-Robot',
     blogSlug: 'frc-team-9621',
   },
 ]

@@ -77,6 +77,7 @@ function ProjectRow({
 }) {
   const href = project.github ?? `/blog/${project.blogSlug}`
   const isExternal = !!project.github
+  const hasCollaborator = !!project.collaborator
 
   return (
     <motion.div
@@ -145,9 +146,11 @@ function ProjectRow({
             className="project-name"
           >
             {project.name}
-            <span style={{ color: 'rgba(212,208,200,0.2)', transition: 'color 0.2s ease' }}>
-              <GitHubIcon />
-            </span>
+            {!hasCollaborator && (
+              <span style={{ color: 'rgba(212,208,200,0.2)', transition: 'color 0.2s ease' }}>
+                <GitHubIcon />
+              </span>
+            )}
           </a>
         ) : (
           <span
@@ -178,7 +181,7 @@ function ProjectRow({
             Featured
           </span>
         )}
-        {!project.github && (
+        {!project.github && !hasCollaborator && (
           <span
             style={{
               fontSize: 10,
@@ -226,6 +229,18 @@ function ProjectRow({
             {tag}
           </span>
         ))}
+        {!project.github && project.collaborator && (
+          <span
+            style={{
+              fontSize: 11,
+              color: 'rgba(212,208,200,0.25)',
+              fontFamily: 'var(--font-instrument)',
+              letterSpacing: '0.02em',
+            }}
+          >
+            w/ {project.collaborator}
+          </span>
+        )}
       </div>
 
       {/* Arrow — links to github if available, else blog post */}
