@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0c0c0c;
+  --body: #d4d0c8;
+  --white: #ffffff;
+  --accent: #e8a44a;
+  --border: rgba(255, 255, 255, 0.05);
+  --muted: rgba(212, 208, 200, 0.4);
+  --very-muted: rgba(212, 208, 200, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--body);
+  font-family: var(--font-instrument), sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: none;
+}
+
+/* Hide default cursor on interactive elements */
+a,
+button,
+[role='button'] {
+  cursor: none;
+}
+
+/* ─── Custom Cursor ─────────────────────────────────────────── */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease,
+    border 0.2s ease;
+  will-change: top, left;
+}
+
+.cursor-dot.hovered {
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: 1.5px solid var(--accent);
+}
+
+/* ─── Marquee ────────────────────────────────────────────────── */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee 22s linear infinite;
+  display: flex;
+  white-space: nowrap;
+  width: max-content;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(232, 164, 74, 0.3);
+}
+
+/* ─── Selection ──────────────────────────────────────────────── */
+::selection {
+  background: rgba(232, 164, 74, 0.2);
+  color: #fff;
+}
+
+/* ─── Utility ────────────────────────────────────────────────── */
+.label {
+  font-family: var(--font-syne), sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.label-accent {
+  color: var(--accent);
+}
+
+/* ─── Project Row — last item border ────────────────────────── */
+.project-row:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ─── Responsive: project rows on mobile ────────────────────── */
+@media (max-width: 640px) {
+  .project-row {
+    grid-template-columns: 1fr auto !important;
+  }
+  .project-desc,
+  .project-tags {
+    display: none !important;
+  }
+}
+
+/* ─── Responsive: nav padding ───────────────────────────────── */
+@media (max-width: 640px) {
+  nav > div {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}
+
+/* ─── Responsive: section padding ───────────────────────────── */
+@media (max-width: 640px) {
+  section {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}

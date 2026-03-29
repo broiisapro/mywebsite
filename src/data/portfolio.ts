@@ -1,0 +1,79 @@
+export interface Project {
+  name: string
+  description: string
+  tags: string[]
+  href?: string
+}
+
+export const projects: Project[] = [
+  {
+    name: 'APEX',
+    description: 'High-altitude balloon spectroscopy platform. Team lead. Launched to 100,000 ft.',
+    tags: ['Python', 'Embedded'],
+  },
+  {
+    name: 'Crawl / OpenClaw',
+    description: 'Autonomous SEO/GEO agentic SaaS. GenAI Genesis 2025.',
+    tags: ['Next.js', 'LLMs', 'Scraping'],
+  },
+  {
+    name: 'VantageAI',
+    description: 'Fine-tuned LLM grader in active pilot with DECA Ontario.',
+    tags: ['Fine-tuning', 'FastAPI', 'React'],
+  },
+  {
+    name: 'Pyros',
+    description: 'Wildfire detection with AI voice agent. Hack Canada 2025.',
+    tags: ['CV', 'Voice AI', 'Python'],
+  },
+  {
+    name: 'commitgpt',
+    description: 'Python CLI/Git hook that auto-generates conventional commit messages via LLM.',
+    tags: ['Python', 'CLI', 'Git'],
+  },
+  {
+    name: 'ASL Translator',
+    description: 'Real-time American Sign Language recognition via computer vision.',
+    tags: ['MediaPipe', 'CV', 'Python'],
+  },
+  {
+    name: 'FRC Team 9621',
+    description: 'FIRST Robotics Competition. Blue Banner winner — first year competing.',
+    tags: ['Robotics', 'C++'],
+  },
+]
+
+export const skills = {
+  Languages: ['Python', 'TypeScript', 'JavaScript', 'C++', 'Java'],
+  'Frameworks & Tools': ['Next.js', 'React', 'FastAPI', 'Docker', 'AWS', 'Git'],
+  Specialties: ['LLM APIs', 'Web Scraping', 'Browser Automation', 'Embedded Systems'],
+}
+
+export const stats = [
+  '5+ years coding',
+  '56+ public repos',
+  '#5 globally · Hack Club',
+  '4.0 GPA',
+  'Blue Banner · FRC Team 9621',
+]
+
+export const marqueeItems = [
+  'APEX',
+  'Crawl / OpenClaw',
+  'VantageAI',
+  'Pyros',
+  'commitgpt',
+  'DECA ICDC Champion',
+  'FRC Blue Banner',
+  'Hack Club High Seas',
+]
+
+export const identity = {
+  name: 'Moksh Siruvani',
+  github: 'https://github.com/broiisapro',
+  linkedin: 'https://linkedin.com/in/moksh-siruvani',
+  email: 'mailto:hello@mokshsiruvani.com',
+  location: 'Whitby, ON',
+  est: 'EST. 2009',
+  bio: '16. Graduating early. Building software that ships — from autonomous SEO platforms to wildfire detection agents. Mechatronics engineer. Founder, competitor, maker.',
+}
