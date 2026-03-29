@@ -40,6 +40,7 @@ const contactRows = [
 export default function ContactSection() {
   const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 
   return (
     <section
@@ -194,7 +195,7 @@ export default function ContactSection() {
               Resume
             </span>
             <a
-              href="/resume.pdf"
+              href={`${basePath}/resume.pdf`}
               download="Moksh_Siruvani_Resume.pdf"
               style={{
                 fontFamily: 'var(--font-syne)',

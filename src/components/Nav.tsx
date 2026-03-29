@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { identity } from '@/data/portfolio'
 
 const navLinks = [
@@ -12,6 +13,7 @@ const navLinks = [
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -44,7 +46,7 @@ export default function Nav() {
         }}
       >
         {/* Logo */}
-        <a
+        <Link
           href="/"
           style={{
             fontFamily: 'var(--font-syne)',
@@ -56,7 +58,7 @@ export default function Nav() {
           }}
         >
           {identity.name}
-        </a>
+        </Link>
 
         {/* Center links — hidden on mobile */}
         <div
@@ -69,7 +71,7 @@ export default function Nav() {
           {/* Resume pill */}
           {/* Replace /public/resume.pdf with your actual resume file */}
           <a
-            href="/resume.pdf"
+            href={`${basePath}/resume.pdf`}
             download="Moksh_Siruvani_Resume.pdf"
             style={{
               fontFamily: 'var(--font-syne)',

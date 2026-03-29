@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
+import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
 import { projects, type Project } from '@/data/portfolio'
 
@@ -229,7 +230,7 @@ function ProjectRow({
       </div>
 
       {/* Arrow — always links to blog post */}
-      <a
+      <Link
         href={blogHref}
         className="project-arrow"
         style={{
@@ -243,7 +244,7 @@ function ProjectRow({
         }}
       >
         ↗
-      </a>
+      </Link>
     </motion.div>
   )
 }

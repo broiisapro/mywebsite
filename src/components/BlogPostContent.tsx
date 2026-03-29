@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import type { BlogPost, BlogSection } from '@/data/blog'
 
 export default function BlogPostContent({
@@ -18,7 +19,7 @@ export default function BlogPostContent({
       }}
     >
       {/* Back link */}
-      <a
+      <Link
         href="/blog"
         style={{
           fontFamily: 'var(--font-syne)',
@@ -39,7 +40,7 @@ export default function BlogPostContent({
         }
       >
         ← Back to blog
-      </a>
+      </Link>
 
       {/* Post header */}
       <h1
@@ -109,7 +110,7 @@ export default function BlogPostContent({
           flexWrap: 'wrap' as const,
         }}
       >
-        <a
+        <Link
           href="/#work"
           style={{
             fontFamily: 'var(--font-syne)',
@@ -133,7 +134,7 @@ export default function BlogPostContent({
           }
         >
           View All Projects
-        </a>
+        </Link>
         {githubUrl && (
           <a
             href={githubUrl}
