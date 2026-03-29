@@ -3,7 +3,8 @@ import Hero from '@/components/Hero'
 import Marquee from '@/components/Marquee'
 import Work from '@/components/Work'
 import About from '@/components/About'
-import Contact from '@/components/Contact'
+import ContactSection from '@/components/ContactSection'
+import Footer from '@/components/Footer'
 import CustomCursor from '@/components/CustomCursor'
 
 export default function Home() {
@@ -16,8 +17,9 @@ export default function Home() {
         <Marquee />
         <Work />
         <About />
+        <ContactSection />
       </main>
-      <Contact />
+      <Footer />
     </>
   )
 }

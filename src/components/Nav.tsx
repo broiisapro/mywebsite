@@ -5,6 +5,7 @@ import { identity } from '@/data/portfolio'
 
 const navLinks = [
   { label: 'Work', href: '#work' },
+  { label: 'Blog', href: '/blog' },
   { label: 'About', href: '#about' },
   { label: 'Contact', href: '#contact' },
 ]
@@ -43,26 +44,61 @@ export default function Nav() {
         }}
       >
         {/* Logo */}
-        <span
+        <a
+          href="/"
           style={{
             fontFamily: 'var(--font-syne)',
             fontWeight: 700,
             fontSize: 15,
             color: '#ffffff',
             letterSpacing: '-0.01em',
+            textDecoration: 'none',
           }}
         >
           {identity.name}
-        </span>
+        </a>
 
         {/* Center links — hidden on mobile */}
         <div
           className="hidden md:flex"
-          style={{ gap: 40, alignItems: 'center' }}
+          style={{ gap: 32, alignItems: 'center' }}
         >
           {navLinks.map((link) => (
             <NavLink key={link.href} href={link.href} label={link.label} />
           ))}
+          {/* Resume pill */}
+          {/* Replace /public/resume.pdf with your actual resume file */}
+          <a
+            href="/resume.pdf"
+            download="Moksh_Siruvani_Resume.pdf"
+            style={{
+              fontFamily: 'var(--font-syne)',
+              fontSize: 10,
+              textTransform: 'uppercase' as const,
+              letterSpacing: '0.1em',
+              color: '#e8a44a',
+              border: '1px solid rgba(232,164,74,0.4)',
+              borderRadius: 20,
+              padding: '6px 16px',
+              textDecoration: 'none',
+              transition: 'background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease',
+              display: 'inline-block',
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget as HTMLAnchorElement
+              el.style.backgroundColor = '#e8a44a'
+              el.style.color = '#0c0c0c'
+              el.style.borderColor = '#e8a44a'
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLAnchorElement
+              el.style.backgroundColor = 'transparent'
+              el.style.color = '#e8a44a'
+              el.style.borderColor = 'rgba(232,164,74,0.4)'
+            }}
+          >
+            Resume
+          </a>
         </div>
 
         {/* Status dot */}
@@ -77,7 +113,6 @@ export default function Nav() {
               height: 7,
               borderRadius: '50%',
               backgroundColor: '#4ade80',
-              boxShadow: '0 0 0 0 rgba(74,222,128,0.5)',
               animation: 'pulse-green 2s ease-in-out infinite',
             }}
           />
@@ -120,8 +155,7 @@ function NavLink({ href, label }: { href: string; label: string }) {
         ((e.currentTarget as HTMLAnchorElement).style.color = '#e8a44a')
       }
       onMouseLeave={(e) =>
-        ((e.currentTarget as HTMLAnchorElement).style.color =
-          'rgba(212,208,200,0.4)')
+        ((e.currentTarget as HTMLAnchorElement).style.color = 'rgba(212,208,200,0.4)')
       }
     >
       {label}
