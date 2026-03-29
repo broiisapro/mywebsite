@@ -75,8 +75,7 @@ function ProjectRow({
   index: number
   inView: boolean
 }) {
-  const href = project.github ?? `/blog/${project.blogSlug}`
-  const isExternal = !!project.github
+  const blogHref = `/blog/${project.blogSlug}`
   const hasCollaborator = !!project.collaborator
 
   return (
@@ -115,55 +114,41 @@ function ProjectRow({
     >
       {/* Name + badges */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' as const }}>
-        {project.github ? (
+        <span
+          style={{
+            fontFamily: 'var(--font-syne)',
+            fontWeight: 700,
+            fontSize: 17,
+            color: 'rgba(255,255,255,0.85)',
+          }}
+          className="project-name"
+        >
+          {project.name}
+        </span>
+        {project.github && (
           <a
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`${project.name} GitHub repository`}
             style={{
-              fontFamily: 'var(--font-syne)',
-              fontWeight: 700,
-              fontSize: 17,
-              color: 'rgba(255,255,255,0.85)',
+              color: 'rgba(212,208,200,0.2)',
               textDecoration: 'none',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: 7,
               transition: 'color 0.2s ease',
             }}
             onMouseEnter={(e) => {
               const el = e.currentTarget as HTMLAnchorElement
               el.style.color = '#e8a44a'
-              const icon = el.querySelector('svg') as SVGElement
-              if (icon) icon.style.color = '#e8a44a'
             }}
             onMouseLeave={(e) => {
               const el = e.currentTarget as HTMLAnchorElement
-              el.style.color = 'rgba(255,255,255,0.85)'
-              const icon = el.querySelector('svg') as SVGElement
-              if (icon) icon.style.color = 'rgba(212,208,200,0.2)'
+              el.style.color = 'rgba(212,208,200,0.2)'
             }}
-            className="project-name"
           >
-            {project.name}
-            {!hasCollaborator && (
-              <span style={{ color: 'rgba(212,208,200,0.2)', transition: 'color 0.2s ease' }}>
-                <GitHubIcon />
-              </span>
-            )}
+            <GitHubIcon />
           </a>
-        ) : (
-          <span
-            style={{
-              fontFamily: 'var(--font-syne)',
-              fontWeight: 700,
-              fontSize: 17,
-              color: 'rgba(255,255,255,0.85)',
-            }}
-            className="project-name"
-          >
-            {project.name}
-          </span>
         )}
         {project.featured && (
           <span
@@ -243,11 +228,9 @@ function ProjectRow({
         )}
       </div>
 
-      {/* Arrow — links to github if available, else blog post */}
+      {/* Arrow — always links to blog post */}
       <a
-        href={href}
-        target={isExternal ? '_blank' : undefined}
-        rel={isExternal ? 'noopener noreferrer' : undefined}
+        href={blogHref}
         className="project-arrow"
         style={{
           fontSize: 18,
