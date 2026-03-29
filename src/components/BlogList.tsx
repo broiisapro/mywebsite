@@ -1,12 +1,13 @@
 'use client'
 
+import Link from 'next/link'
 import type { BlogPost } from '@/data/blog'
 
 export default function BlogList({ posts }: { posts: BlogPost[] }) {
   return (
     <div>
       {posts.map((post) => (
-        <a
+        <Link
           key={post.slug}
           href={`/blog/${post.slug}`}
           style={{
@@ -109,7 +110,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
           >
             ↗
           </span>
-        </a>
+        </Link>
       ))}
       {/* Bottom border on last item */}
       <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }} />

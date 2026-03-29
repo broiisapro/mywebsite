@@ -141,6 +141,31 @@ export default function Nav() {
 }
 
 function NavLink({ href, label }: { href: string; label: string }) {
+  if (href.startsWith('/')) {
+    return (
+      <Link
+        href={href}
+        style={{
+          fontFamily: 'var(--font-syne)',
+          fontSize: 12,
+          textTransform: 'uppercase' as const,
+          letterSpacing: '0.12em',
+          color: 'rgba(212,208,200,0.4)',
+          textDecoration: 'none',
+          transition: 'color 0.2s ease',
+        }}
+        onMouseEnter={(e) =>
+          ((e.currentTarget as HTMLAnchorElement).style.color = '#e8a44a')
+        }
+        onMouseLeave={(e) =>
+          ((e.currentTarget as HTMLAnchorElement).style.color = 'rgba(212,208,200,0.4)')
+        }
+      >
+        {label}
+      </Link>
+    )
+  }
+
   return (
     <a
       href={href}
