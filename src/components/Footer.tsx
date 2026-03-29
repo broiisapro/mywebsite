@@ -32,7 +32,7 @@ export default function Footer() {
           letterSpacing: '0.06em',
         }}
       >
-        © 2025 Moksh Siruvani
+        © {new Date().getFullYear()} Moksh Siruvani
       </span>
 
       <div style={{ display: 'flex', gap: 32 }}>

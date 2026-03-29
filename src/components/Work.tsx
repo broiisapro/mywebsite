@@ -30,6 +30,7 @@ export default function Work() {
         maxWidth: 1200,
         margin: '0 auto',
         padding: '72px 48px',
+        scrollMarginTop: '80px',
       }}
     >
       {/* Header row */}
@@ -53,7 +54,7 @@ export default function Work() {
             letterSpacing: '0.06em',
           }}
         >
-          08 Projects
+          {`${projects.length.toString().padStart(2, '0')} Projects`}
         </span>
       </motion.div>
 

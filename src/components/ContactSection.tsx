@@ -175,7 +175,6 @@ export default function ContactSection() {
           ))}
 
           {/* Resume download row */}
-          {/* Replace /public/resume.pdf with your actual resume file */}
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}

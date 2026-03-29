@@ -485,7 +485,7 @@ export const blogPosts: BlogPost[] = [
     tag: 'CV · Python',
     excerpt: "Real-time American Sign Language recognition from a webcam feed. What it took, what works, and what the honest limitations are.",
     projectSlug: 'asl-translator',
-    githubUrl: 'https://github.com/broiisapro',
+    githubUrl: 'https://github.com/broiisapro/project-11---sign-language',
     content: [
       {
         type: 'p',

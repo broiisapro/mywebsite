@@ -69,7 +69,6 @@ export default function Nav() {
             <NavLink key={link.href} href={link.href} label={link.label} />
           ))}
           {/* Resume pill */}
-          {/* Replace /public/resume.pdf with your actual resume file */}
           <a
             href={`${basePath}/resume.pdf`}
             download="Moksh_Siruvani_Resume.pdf"
