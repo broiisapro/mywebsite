@@ -17,6 +17,7 @@ export default function About() {
         margin: '0 auto',
         padding: '72px 48px',
         borderTop: '1px solid rgba(255,255,255,0.05)',
+        scrollMarginTop: 120,
       }}
     >
       <motion.div

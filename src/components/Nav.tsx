@@ -5,10 +5,10 @@ import Link from 'next/link'
 import { identity } from '@/data/portfolio'
 
 const navLinks = [
-  { label: 'Work', href: '#work' },
+  { label: 'Work', href: '/#work' },
   { label: 'Blog', href: '/blog' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'About', href: '/#about' },
+  { label: 'Contact', href: '/#contact' },
 ]
 
 export default function Nav() {
