@@ -93,7 +93,7 @@ function ProjectRow({
         paddingLeft: 0,
         marginLeft: 0,
         transition: 'all 0.25s ease',
-        cursor: 'default',
+        cursor: 'none',
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement
