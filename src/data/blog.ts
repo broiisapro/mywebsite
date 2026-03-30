@@ -409,72 +409,124 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: 'commitgpt',
-    title: "commitgpt: The Git Hook I Built Because I Was Tired of Writing Commit Messages",
+    title: "commitgpt 2.0: Building a Commit Message System, Not a Prompt Trick",
     date: '2025',
     tag: 'Python · CLI · Developer Tools',
-    excerpt: "Conventional commits are correct. Writing them is tedious. commitgpt hooks into Git's commit-msg flow and generates them for you.",
+    excerpt: "Not about generation. About output control under unreliable model behavior.",
     projectSlug: 'commitgpt',
     githubUrl: 'https://github.com/broiisapro/commitgpt',
     content: [
       {
         type: 'p',
-        text: "Conventional commits are the right way to write commit messages. Structured prefixes — feat, fix, chore, refactor, docs — make history readable, power changelog generation, and enforce a discipline that prevents the project-ending commit message of 'stuff' appearing at a critical moment.",
+        text: "I didn't build commitgpt because writing commit messages is hard. I built it because writing good commit messages, every day, at speed, is friction that accumulates.",
       },
       {
         type: 'p',
-        text: "They're also tedious to write. Not hard. Just tedious. You make a change, you know what the change is, and then you have to translate that into the right prefix and a clear one-line description. Every time. For every commit. I was doing it, but I wasn't enjoying it.",
+        text: "Conventional commits are useful: they make history queryable, changelogs scriptable, and reviews less chaotic. But in practice, developers either rush them or skip structure when context switching gets expensive. \"fix stuff\" isn't a morality failure, it's a tooling failure.",
+      },
+      {
+        type: 'p',
+        text: "commitgpt started as a Git hook that generated one-line conventional commits from staged diffs. That version worked. Then real usage exposed the real problem: this isn't about generation, it's about output control under unreliable model behavior.",
       },
       {
         type: 'h2',
-        text: 'How It Works',
+        text: 'How commitgpt works now',
       },
       {
         type: 'p',
-        text: "commitgpt hooks into Git's commit-msg flow. When you run git commit, Git executes the commit-msg hook before finalizing the commit. commitgpt reads the staged diff, sends it to an LLM with a structured prompt, and writes a conventional commit message back to the commit file.",
-      },
-      {
-        type: 'p',
-        text: "You never type a commit message. You just commit. The message appears.",
+        text: "commitgpt has two modes, because one mode cannot optimize for both speed and quality.",
       },
       {
         type: 'h2',
-        text: 'Why a Hook, Not a CLI',
+        text: '1) Automatic mode (global Git hook)',
       },
       {
         type: 'p',
-        text: "A standalone CLI would mean adding a step: run the CLI, copy the message, paste it into git commit. That's not meaningfully less tedious than writing the message yourself.",
-      },
-      {
-        type: 'p',
-        text: "The hook integrates into the existing workflow. You don't change how you commit. The tool disappears into the background. That's the goal — tools should be invisible.",
+        text: "Runs on git commit. Reads staged diff. Generates a strict single-line conventional commit. Writes to commit message file. Never blocks commit if generation fails. This is for day-to-day velocity: fast commits, minimal ceremony.",
       },
       {
         type: 'h2',
-        text: 'Design Decisions',
+        text: '2) Manual detailed mode (CLI)',
       },
       {
         type: 'p',
-        text: "Conventional commits specifically because they're the most widely adopted structured commit standard and because the structure (type, optional scope, description) maps cleanly to what an LLM can infer from a diff. 'This diff adds a new function to the auth module' → feat(auth): add token refresh function.",
-      },
-      {
-        type: 'p',
-        text: "The LLM is sometimes wrong. It occasionally picks the wrong type, or writes a description that's technically accurate but misses the intent. There's an escape hatch: if you don't like the generated message, you edit the commit file before the hook finalizes. Standard Git behavior, no special commands.",
-      },
-      {
-        type: 'p',
-        text: "The prompt is the engineering. Getting the LLM to consistently output valid conventional commit format — and nothing else — took more iteration than the hook integration itself.",
+        text: "Explicit command for higher-quality messages. Produces multi-line commit messages with a summary line, key changes, and an optional impact statement. Designed for commits that will be read in PRs, audits, or release prep. This is for communication quality when commit history is a collaboration surface, not just a log.",
       },
       {
         type: 'h2',
-        text: 'The Philosophy',
+        text: 'The evolution: from hook automation to behavioral control',
       },
       {
         type: 'p',
-        text: "Developer tools should disappear. The best tools are the ones you stop noticing because they just work. You shouldn't think about commitgpt while you're committing — you should just commit, and the message should be there.",
+        text: "The first version proved the hook integration quickly. That was the easy part.",
       },
       {
         type: 'p',
-        text: "I have 56 public repos. I use commitgpt on all of them now.",
+        text: "The second version required system-level thinking: separate workflows for speed and depth, separate prompts and validation rules per workflow, failure handling that protects developer flow, and guardrails for model outputs that are technically valid but operationally useless.",
+      },
+      {
+        type: 'p',
+        text: "The key shift: I stopped treating the model as a smart text generator and started treating it as an unreliable subsystem behind an interface contract.",
+      },
+      {
+        type: 'h2',
+        text: 'Design tradeoffs that actually mattered',
+      },
+      {
+        type: 'p',
+        text: "Single-line mode must be deterministic enough to run silently in the background. Detailed mode can be richer, but only when explicitly requested. Trying to make one prompt do both led to mediocre results in both.",
+      },
+      {
+        type: 'p',
+        text: "Automatic mode enforces tight output rules: one line, valid conventional prefix, no commentary. If output violates format, regenerate or fallback. Detailed mode allows structured multiline output with bullets and context — validation is looser because readability matters more than rigid syntax.",
+      },
+      {
+        type: 'p',
+        text: "If the API fails (rate limit, bad credits, timeout), commit flow still works. A tool that blocks commits during network failure is not a developer tool. It's an outage amplifier.",
+      },
+      {
+        type: 'h2',
+        text: 'Real-world LLM failures you have to design for',
+      },
+      {
+        type: 'p',
+        text: "The obvious failure is \"bad commit message.\" The real failures are weirder: empty responses, reasoning dumps instead of final output, correct analysis wrapped in invalid format, prefix drift with borderline diffs, API failures at exactly the wrong time.",
+      },
+      {
+        type: 'p',
+        text: "A model might return a thoughtful paragraph explaining architectural impact. Great for a human. Useless for commit-msg hook mode. Another example: model outputs a valid line plus a second line of explanation, instantly breaking strict commit formatting.",
+      },
+      {
+        type: 'p',
+        text: "The fix is not \"better model.\" The fix is mode-specific prompts, hard output contracts, validation and fallback, and conservative defaults under uncertainty.",
+      },
+      {
+        type: 'h2',
+        text: 'The philosophy now',
+      },
+      {
+        type: 'p',
+        text: "This project is no longer about AI writing commits for me. It's about building a reliable interface between developer workflows and nondeterministic models.",
+      },
+      {
+        type: 'p',
+        text: "The core lesson: DX beats raw model intelligence in tooling contexts. A brilliant model that occasionally breaks flow is worse than a modest model behind solid constraints. Developers optimize for trust. If a tool is predictable, they keep it. If it surprises them at commit time, they rip it out.",
+      },
+      {
+        type: 'p',
+        text: "The goal isn't maximum linguistic quality. The goal is controlled behavior under real-world failure conditions.",
+      },
+      {
+        type: 'h2',
+        text: 'Closing',
+      },
+      {
+        type: 'p',
+        text: "commitgpt started as a convenience hook. It became a small case study in production LLM integration: separate modes for separate jobs, strict where automation is implicit, flexible where intent is explicit, fail safely, treat prompt design and reliability as first-class engineering work.",
+      },
+      {
+        type: 'p',
+        text: "The hardest part was never wiring into Git. The hardest part was making model output dependable enough that developers stop thinking about the tool and trust it in their daily flow.",
       },
     ],
   },
