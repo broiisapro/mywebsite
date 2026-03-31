@@ -51,9 +51,9 @@ button,
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
-  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease,
-    border 0.2s ease;
-  will-change: top, left;
+  transition: width 0.12s ease, height 0.12s ease, background 0.12s ease,
+    border 0.12s ease;
+  will-change: transform;
 }
 
 .cursor-dot.hovered {
