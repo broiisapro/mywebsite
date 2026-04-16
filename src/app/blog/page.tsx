@@ -11,6 +11,14 @@ export const metadata: Metadata = {
 }
 
 export default function BlogIndex() {
+  const postSummaries = blogPosts.map(({ slug, title, tag, excerpt, date }) => ({
+    slug,
+    title,
+    tag,
+    excerpt,
+    date,
+  }))
+
   return (
     <>
       <CustomCursor />
@@ -57,7 +65,7 @@ export default function BlogIndex() {
           </span>
         </div>
 
-        <BlogList posts={blogPosts} />
+        <BlogList posts={postSummaries} />
       </main>
       <Footer />
     </>

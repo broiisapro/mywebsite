@@ -286,7 +286,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'vantagei-deca-grader',
     title: "VantageAI: Fine-Tuning an LLM to Grade DECA Cases",
-    date: '2024',
+    date: 'January 2024',
     tag: 'AI · Fine-tuning',
     excerpt: "DECA Ontario has thousands of students competing in business case events. Grading is slow and inconsistent. I built a model to fix that — and got it into a real pilot.",
     projectSlug: 'vantagei-deca-grader',
@@ -410,7 +410,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'commitgpt',
     title: "commitgpt 2.0: Building a Commit Message System, Not a Prompt Trick",
-    date: '2025',
+    date: 'January 2025',
     tag: 'Python · CLI · Developer Tools',
     excerpt: "Not about generation. About output control under unreliable model behavior.",
     projectSlug: 'commitgpt',
@@ -533,7 +533,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'asl-translator',
     title: "ASL Translator: Real-Time Sign Language Recognition with MediaPipe",
-    date: '2024',
+    date: 'January 2024',
     tag: 'CV · Python',
     excerpt: "Real-time American Sign Language recognition from a webcam feed. What it took, what works, and what the honest limitations are.",
     projectSlug: 'asl-translator',
@@ -608,7 +608,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'frc-team-9621',
     title: "Blue Banner, Rookie Year: What FIRST Robotics Actually Teaches You",
-    date: '2024',
+    date: 'January 2024',
     tag: 'Robotics · C++',
     excerpt: "A Blue Banner in FRC means you won a regional. Winning it in your rookie year — first time competing — is rare. Here's what that season actually looked like.",
     projectSlug: 'frc-team-9621',

@@ -31,7 +31,7 @@ export default function Hero() {
       </motion.div>
 
       {/* Giant name */}
-      <div style={{ marginBottom: 48 }}>
+      <h1 style={{ margin: 0, marginBottom: 48 }}>
         {['Moksh', 'Siruvani'].map((word, i) => (
           <motion.div
             key={word}
@@ -54,7 +54,7 @@ export default function Hero() {
             </span>
           </motion.div>
         ))}
-      </div>
+      </h1>
 
       {/* Bottom: bio + stats + CTAs */}
       <motion.div

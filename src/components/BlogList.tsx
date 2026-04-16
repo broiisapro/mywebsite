@@ -1,9 +1,9 @@
-'use client'
-
 import Link from 'next/link'
 import type { BlogPost } from '@/data/blog'
 
-export default function BlogList({ posts }: { posts: BlogPost[] }) {
+type BlogListItem = Pick<BlogPost, 'slug' | 'title' | 'tag' | 'excerpt' | 'date'>
+
+export default function BlogList({ posts }: { posts: BlogListItem[] }) {
   return (
     <div>
       {posts.map((post) => (
@@ -21,22 +21,6 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
             transition: 'all 0.25s ease',
           }}
           className="blog-row"
-          onMouseEnter={(e) => {
-            const el = e.currentTarget as HTMLAnchorElement
-            el.style.paddingLeft = '12px'
-            el.style.marginLeft = '-12px'
-            el.style.backgroundColor = 'rgba(232,164,74,0.03)'
-            const arrow = el.querySelector('.blog-arrow') as HTMLElement
-            if (arrow) arrow.style.color = '#e8a44a'
-          }}
-          onMouseLeave={(e) => {
-            const el = e.currentTarget as HTMLAnchorElement
-            el.style.paddingLeft = '0'
-            el.style.marginLeft = '0'
-            el.style.backgroundColor = 'transparent'
-            const arrow = el.querySelector('.blog-arrow') as HTMLElement
-            if (arrow) arrow.style.color = 'rgba(212,208,200,0.2)'
-          }}
         >
           <div>
             <div

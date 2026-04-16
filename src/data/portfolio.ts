@@ -14,7 +14,6 @@ export const projects: Project[] = [
     description:
       'Personal CRM and content intelligence platform. 19 API routes, 41 React components, ~10,000 lines of TypeScript. AI post generation, scoring engine, and autopsy features.',
     tags: ['Next.js 14', 'TypeScript', 'Prisma', 'SQLite', 'Claude API'],
-    // TODO: add GitHub URL if/when repo is made public
     github: null,
     blogSlug: 'linkedin-growth-os',
     featured: true,
@@ -40,7 +39,6 @@ export const projects: Project[] = [
     name: 'VantageAI',
     description: 'Fine-tuned LLM grader in active pilot with DECA Ontario.',
     tags: ['Fine-tuning', 'FastAPI', 'React'],
-    // TODO: add GitHub URL if/when repo is made public
     github: null,
     blogSlug: 'vantagei-deca-grader',
   },

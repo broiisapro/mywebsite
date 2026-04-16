@@ -21,6 +21,20 @@ export async function generateMetadata({
   return {
     title: `${post.title} — Moksh Siruvani`,
     description: post.excerpt,
+    alternates: {
+      canonical: `https://broiisapro.github.io/mywebsite/blog/${post.slug}`,
+    },
+    openGraph: {
+      title: `${post.title} — Moksh Siruvani`,
+      description: post.excerpt,
+      url: `https://broiisapro.github.io/mywebsite/blog/${post.slug}`,
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary',
+      title: `${post.title} — Moksh Siruvani`,
+      description: post.excerpt,
+    },
   }
 }
 

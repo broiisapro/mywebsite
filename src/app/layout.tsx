@@ -20,11 +20,22 @@ export const metadata: Metadata = {
   title: 'Moksh Siruvani — Engineer & Builder',
   description:
     '16. Graduating early. Building software that ships — from autonomous SEO platforms to wildfire detection agents.',
+  alternates: {
+    canonical: 'https://broiisapro.github.io/mywebsite',
+  },
   openGraph: {
     title: 'Moksh Siruvani — Engineer & Builder',
     description:
       'Building software that ships — from autonomous SEO platforms to wildfire detection agents.',
+    url: 'https://broiisapro.github.io/mywebsite',
+    siteName: 'Moksh Siruvani',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Moksh Siruvani — Engineer & Builder',
+    description:
+      '16. Graduating early. Building software that ships — from autonomous SEO platforms to wildfire detection agents.',
   },
 }
 

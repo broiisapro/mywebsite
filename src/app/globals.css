@@ -29,14 +29,10 @@ body {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  cursor: none;
 }
 
-/* Hide default cursor on interactive elements */
-a,
-button,
-[role='button'] {
-  cursor: none;
+.custom-cursor-active * {
+  cursor: none !important;
 }
 
 /* ─── Custom Cursor ─────────────────────────────────────────── */
@@ -105,6 +101,12 @@ button,
   color: #fff;
 }
 
+:focus-visible {
+  outline: 2px solid #e8a44a;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
 /* ─── Utility ────────────────────────────────────────────────── */
 .label {
   font-family: var(--font-syne), sans-serif;
@@ -114,13 +116,21 @@ button,
   color: var(--muted);
 }
 
-.label-accent {
-  color: var(--accent);
-}
-
 /* ─── Project Row — last item border ────────────────────────── */
 .project-row:last-child {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.blog-row:hover,
+.blog-row:focus-visible {
+  padding-left: 12px !important;
+  margin-left: -12px !important;
+  background-color: rgba(232, 164, 74, 0.03) !important;
+}
+
+.blog-row:hover .blog-arrow,
+.blog-row:focus-visible .blog-arrow {
+  color: #e8a44a !important;
 }
 
 /* ─── Responsive: project rows on mobile ────────────────────── */

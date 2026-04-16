@@ -18,6 +18,7 @@ export default function CustomCursor() {
 
     const dot = dotRef.current
     if (!dot) return
+    document.documentElement.classList.add('custom-cursor-active')
     dot.style.opacity = '1'
 
     const INTERACTIVE_SELECTOR =
@@ -76,13 +77,13 @@ export default function CustomCursor() {
         targetRef.current = { x: bestX, y: bestY }
         if (snappedRef.current !== bestEl) {
           snappedRef.current = bestEl
-          dot.classList.add('hovered', 'snapped')
+          dot.classList.add('hovered')
         }
       } else {
         targetRef.current = { x: pointer.x, y: pointer.y }
         if (snappedRef.current) {
           snappedRef.current = null
-          dot.classList.remove('hovered', 'snapped')
+          dot.classList.remove('hovered')
         }
       }
     }
@@ -127,6 +128,7 @@ export default function CustomCursor() {
     observer.observe(document.body, { childList: true, subtree: true })
 
     return () => {
+      document.documentElement.classList.remove('custom-cursor-active')
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('scroll', onViewportChange)
       window.removeEventListener('resize', onViewportChange)

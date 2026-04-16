@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://broiisapro.github.io/mywebsite/sitemap.xml
