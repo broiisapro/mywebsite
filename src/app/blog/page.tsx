@@ -32,42 +32,51 @@ export default function BlogIndex() {
         }}
       >
         {/* Header */}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: 56,
-            borderBottom: '1px solid rgba(255,255,255,0.05)',
-            paddingBottom: 32,
-          }}
-        >
-          <span
+        <div style={{ paddingBottom: 32, marginBottom: 0 }}>
+          <h1
             style={{
               fontFamily: 'var(--font-syne)',
-              fontWeight: 800,
-              fontSize: 'clamp(32px, 4vw, 48px)',
-              letterSpacing: '-0.03em',
-              color: '#ffffff',
+              fontWeight: 900,
+              fontSize: 'clamp(40px, 7vw, 72px)',
+              letterSpacing: '-0.04em',
+              textTransform: 'uppercase',
+              color: 'var(--ink)',
+              lineHeight: 1,
+              marginBottom: 8,
             }}
           >
             Writing
-          </span>
+          </h1>
           <span
             style={{
-              fontFamily: 'var(--font-syne)',
-              fontSize: 11,
-              color: 'rgba(212,208,200,0.2)',
-              letterSpacing: '0.06em',
+              fontFamily: 'var(--font-mono)',
+              fontSize: 10,
+              color: 'var(--ink3)',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
             }}
           >
-            {blogPosts.length.toString().padStart(2, '0')} Posts
+            {blogPosts.length} posts
           </span>
         </div>
+
+        <div
+          style={{
+            borderBottom: '2px solid var(--ink)',
+            marginBottom: 0,
+            marginTop: 16,
+          }}
+        />
 
         <BlogList posts={postSummaries} />
       </main>
       <Footer />
+
+      <style>{`
+        @media (max-width: 640px) {
+          main { padding-left: 24px !important; padding-right: 24px !important; }
+        }
+      `}</style>
     </>
   )
 }

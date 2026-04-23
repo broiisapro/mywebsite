@@ -15,10 +15,11 @@ export default function BlogList({ posts }: { posts: BlogListItem[] }) {
             gridTemplateColumns: '1fr auto',
             alignItems: 'center',
             gap: 24,
-            borderTop: '1px solid rgba(255,255,255,0.05)',
-            padding: '28px 0',
+            borderTop: '1px solid var(--border)',
+            padding: '20px 0',
             textDecoration: 'none',
-            transition: 'all 0.25s ease',
+            paddingLeft: 0,
+            marginLeft: 0,
           }}
           className="blog-row"
         >
@@ -27,31 +28,35 @@ export default function BlogList({ posts }: { posts: BlogListItem[] }) {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 12,
-                marginBottom: 8,
-                flexWrap: 'wrap' as const,
+                gap: 10,
+                marginBottom: 6,
+                flexWrap: 'wrap',
               }}
             >
               <span
                 style={{
                   fontFamily: 'var(--font-syne)',
                   fontWeight: 700,
-                  fontSize: 17,
-                  color: 'rgba(255,255,255,0.85)',
+                  fontSize: 15,
+                  color: 'var(--ink)',
                   lineHeight: 1.3,
+                  letterSpacing: '-0.01em',
                 }}
               >
                 {post.title}
               </span>
               <span
                 style={{
-                  fontSize: 10,
-                  color: 'rgba(232,164,74,0.6)',
-                  border: '1px solid rgba(232,164,74,0.15)',
-                  borderRadius: 20,
-                  padding: '2px 10px',
+                  fontSize: 9,
+                  color: 'var(--acc)',
+                  background: 'var(--acc-bg)',
+                  borderRadius: 3,
+                  padding: '2px 7px',
                   fontFamily: 'var(--font-instrument)',
-                  whiteSpace: 'nowrap' as const,
+                  fontWeight: 600,
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                  whiteSpace: 'nowrap',
                 }}
               >
                 {post.tag}
@@ -61,8 +66,8 @@ export default function BlogList({ posts }: { posts: BlogListItem[] }) {
               style={{
                 fontFamily: 'var(--font-instrument)',
                 fontSize: 13,
-                color: 'rgba(212,208,200,0.4)',
-                lineHeight: 1.5,
+                color: 'var(--ink2)',
+                lineHeight: 1.6,
                 margin: 0,
               }}
             >
@@ -70,13 +75,13 @@ export default function BlogList({ posts }: { posts: BlogListItem[] }) {
             </p>
             <span
               style={{
-                fontFamily: 'var(--font-syne)',
+                fontFamily: 'var(--font-mono)',
                 fontSize: 10,
-                color: 'rgba(212,208,200,0.2)',
+                color: 'var(--ink3)',
                 letterSpacing: '0.08em',
-                textTransform: 'uppercase' as const,
+                textTransform: 'uppercase',
                 display: 'block',
-                marginTop: 10,
+                marginTop: 8,
               }}
             >
               {post.date}
@@ -85,19 +90,19 @@ export default function BlogList({ posts }: { posts: BlogListItem[] }) {
           <span
             className="blog-arrow"
             style={{
-              fontSize: 18,
-              color: 'rgba(212,208,200,0.2)',
-              transition: 'color 0.25s ease',
+              fontSize: 16,
+              color: 'var(--border2)',
+              transition: 'color 0.15s ease',
               paddingLeft: 8,
               flexShrink: 0,
+              fontFamily: 'var(--font-instrument)',
             }}
           >
             ↗
           </span>
         </Link>
       ))}
-      {/* Bottom border on last item */}
-      <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }} />
+      <div style={{ borderTop: '1px solid var(--border)' }} />
     </div>
   )
 }

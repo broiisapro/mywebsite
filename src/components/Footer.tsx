@@ -5,47 +5,44 @@ import { identity } from '@/data/portfolio'
 const footerLinks = [
   { label: 'GitHub', href: identity.github },
   { label: 'LinkedIn', href: identity.linkedin },
-  { label: 'Email', href: identity.email },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Resume', href: '/resume.pdf' },
 ]
 
 export default function Footer() {
   return (
     <footer
       style={{
-        borderTop: '1px solid rgba(255,255,255,0.05)',
-        padding: '36px 48px',
+        marginTop: 72,
+        padding: '22px 48px',
+        borderTop: '1px solid var(--border)',
+        background: 'var(--bg2)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        flexWrap: 'wrap' as const,
-        gap: 16,
-        maxWidth: 1200,
-        margin: '0 auto',
+        flexWrap: 'wrap',
+        gap: 12,
       }}
-      className="site-footer"
     >
       <span
         style={{
           fontFamily: 'var(--font-instrument)',
           fontSize: 11,
-          color: 'rgba(212,208,200,0.3)',
-          letterSpacing: '0.06em',
+          color: 'var(--ink3)',
         }}
       >
-        © {new Date().getFullYear()} Moksh Siruvani
+        © 2025 Moksh Siruvani · Whitby, Ontario
       </span>
 
-      <div style={{ display: 'flex', gap: 32 }}>
+      <div style={{ display: 'flex', gap: 18 }}>
         {footerLinks.map((link) => (
           <FooterLink key={link.label} href={link.href} label={link.label} />
         ))}
       </div>
 
       <style>{`
-        @media (max-width: 480px) {
-          .site-footer {
-            padding: 28px 24px !important;
-          }
+        @media (max-width: 640px) {
+          footer { padding: 18px 24px !important; }
         }
       `}</style>
     </footer>
@@ -53,25 +50,24 @@ export default function Footer() {
 }
 
 function FooterLink({ href, label }: { href: string; label: string }) {
+  const isExternal = href.startsWith('http')
   return (
     <a
       href={href}
-      target={href.startsWith('mailto') ? undefined : '_blank'}
-      rel="noopener noreferrer"
+      target={isExternal ? '_blank' : undefined}
+      rel={isExternal ? 'noopener noreferrer' : undefined}
       style={{
-        fontFamily: 'var(--font-syne)',
+        fontFamily: 'var(--font-instrument)',
         fontSize: 11,
-        textTransform: 'uppercase' as const,
-        letterSpacing: '0.1em',
-        color: 'rgba(212,208,200,0.3)',
+        color: 'var(--ink3)',
         textDecoration: 'none',
         transition: 'color 0.2s ease',
       }}
       onMouseEnter={(e) =>
-        ((e.currentTarget as HTMLAnchorElement).style.color = '#e8a44a')
+        ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--acc)')
       }
       onMouseLeave={(e) =>
-        ((e.currentTarget as HTMLAnchorElement).style.color = 'rgba(212,208,200,0.3)')
+        ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink3)')
       }
     >
       {label}

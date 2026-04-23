@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Syne, Instrument_Sans } from 'next/font/google'
+import { Syne, Instrument_Sans, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 
 const syne = Syne({
@@ -13,6 +13,13 @@ const instrumentSans = Instrument_Sans({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   variable: '--font-instrument',
+  display: 'swap',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-mono',
   display: 'swap',
 })
 
@@ -45,7 +52,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${syne.variable} ${instrumentSans.variable}`}>
+    <html
+      lang="en"
+      className={`${syne.variable} ${instrumentSans.variable} ${jetbrainsMono.variable}`}
+    >
       <body>{children}</body>
     </html>
   )

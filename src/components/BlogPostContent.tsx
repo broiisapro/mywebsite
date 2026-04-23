@@ -22,69 +22,74 @@ export default function BlogPostContent({
       <Link
         href="/blog"
         style={{
-          fontFamily: 'var(--font-syne)',
-          fontSize: 12,
-          textTransform: 'uppercase' as const,
-          letterSpacing: '0.1em',
-          color: 'rgba(232,164,74,0.6)',
+          fontFamily: 'var(--font-mono)',
+          fontSize: 10,
+          textTransform: 'uppercase',
+          letterSpacing: '0.12em',
+          color: 'var(--ink3)',
           textDecoration: 'none',
           display: 'inline-block',
-          marginBottom: 48,
+          marginBottom: 40,
           transition: 'color 0.2s ease',
         }}
         onMouseEnter={(e) =>
-          ((e.currentTarget as HTMLAnchorElement).style.color = '#e8a44a')
+          ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--acc)')
         }
         onMouseLeave={(e) =>
-          ((e.currentTarget as HTMLAnchorElement).style.color = 'rgba(232,164,74,0.6)')
+          ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink3)')
         }
       >
-        ← Back to blog
+        ← All posts
       </Link>
 
       {/* Post header */}
       <h1
         style={{
           fontFamily: 'var(--font-syne)',
-          fontWeight: 800,
-          fontSize: 'clamp(28px, 3.5vw, 40px)',
-          letterSpacing: '-0.025em',
-          lineHeight: 1.15,
-          color: '#ffffff',
-          marginBottom: 20,
+          fontWeight: 900,
+          fontSize: 'clamp(32px, 5vw, 56px)',
+          letterSpacing: '-0.04em',
+          lineHeight: 1.05,
+          textTransform: 'uppercase',
+          color: 'var(--ink)',
+          marginBottom: 18,
         }}
       >
         {post.title}
       </h1>
 
+      {/* Meta row */}
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: 16,
-          marginBottom: 56,
-          flexWrap: 'wrap' as const,
+          gap: 14,
+          marginBottom: 48,
+          flexWrap: 'wrap',
         }}
       >
         <span
           style={{
-            fontFamily: 'var(--font-syne)',
-            fontSize: 11,
-            color: 'rgba(212,208,200,0.3)',
+            fontFamily: 'var(--font-mono)',
+            fontSize: 10,
+            color: 'var(--ink3)',
             letterSpacing: '0.08em',
-            textTransform: 'uppercase' as const,
+            textTransform: 'uppercase',
           }}
         >
           {post.date}
         </span>
         <span
           style={{
-            fontSize: 10,
-            color: 'rgba(232,164,74,0.6)',
-            border: '1px solid rgba(232,164,74,0.15)',
-            borderRadius: 20,
-            padding: '3px 10px',
+            fontSize: 9,
+            color: 'var(--acc)',
+            background: 'var(--acc-bg)',
+            borderRadius: 3,
+            padding: '2px 7px',
             fontFamily: 'var(--font-instrument)',
+            fontWeight: 600,
+            letterSpacing: '0.06em',
+            textTransform: 'uppercase',
           }}
         >
           {post.tag}
@@ -92,48 +97,47 @@ export default function BlogPostContent({
       </div>
 
       {/* Post content */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
         {post.content.map((section, i) => (
           <ContentBlock key={i} section={section} />
         ))}
       </div>
 
-      {/* Footer: view project + github */}
+      {/* Footer CTAs */}
       <div
         style={{
-          borderTop: '1px solid rgba(255,255,255,0.05)',
+          borderTop: '1px solid var(--border)',
           marginTop: 64,
-          paddingTop: 40,
+          paddingTop: 36,
           display: 'flex',
           alignItems: 'center',
-          gap: 16,
-          flexWrap: 'wrap' as const,
+          gap: 24,
+          flexWrap: 'wrap',
         }}
       >
         <Link
           href="/#work"
           style={{
-            fontFamily: 'var(--font-syne)',
+            fontFamily: 'var(--font-instrument)',
             fontWeight: 700,
-            fontSize: 12,
-            textTransform: 'uppercase' as const,
-            letterSpacing: '0.08em',
-            color: '#0c0c0c',
-            backgroundColor: '#e8a44a',
-            padding: '10px 20px',
-            borderRadius: 2,
+            fontSize: 11,
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            color: 'var(--ink)',
             textDecoration: 'none',
-            transition: 'opacity 0.2s ease',
+            borderBottom: '2px solid var(--acc)',
+            paddingBottom: 1,
+            transition: 'color 0.2s ease',
             display: 'inline-block',
           }}
           onMouseEnter={(e) =>
-            ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.85')
+            ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--acc)')
           }
           onMouseLeave={(e) =>
-            ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')
+            ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink)')
           }
         >
-          View All Projects
+          View all projects →
         </Link>
         {githubUrl && (
           <a
@@ -141,34 +145,35 @@ export default function BlogPostContent({
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              fontFamily: 'var(--font-syne)',
+              fontFamily: 'var(--font-instrument)',
               fontWeight: 700,
-              fontSize: 12,
-              textTransform: 'uppercase' as const,
-              letterSpacing: '0.08em',
-              color: '#e8a44a',
-              border: '1px solid rgba(232,164,74,0.3)',
-              padding: '9px 20px',
-              borderRadius: 2,
+              fontSize: 11,
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              color: 'var(--ink)',
               textDecoration: 'none',
-              transition: 'border-color 0.2s ease, background-color 0.2s ease',
+              borderBottom: '2px solid var(--acc)',
+              paddingBottom: 1,
+              transition: 'color 0.2s ease',
               display: 'inline-block',
             }}
-            onMouseEnter={(e) => {
-              const el = e.currentTarget as HTMLAnchorElement
-              el.style.borderColor = 'rgba(232,164,74,0.7)'
-              el.style.backgroundColor = 'rgba(232,164,74,0.06)'
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget as HTMLAnchorElement
-              el.style.borderColor = 'rgba(232,164,74,0.3)'
-              el.style.backgroundColor = 'transparent'
-            }}
+            onMouseEnter={(e) =>
+              ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--acc)')
+            }
+            onMouseLeave={(e) =>
+              ((e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink)')
+            }
           >
             View on GitHub ↗
           </a>
         )}
       </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          main { padding-left: 24px !important; padding-right: 24px !important; }
+        }
+      `}</style>
     </main>
   )
 }
@@ -179,13 +184,11 @@ function ContentBlock({ section }: { section: BlogSection }) {
       <h2
         style={{
           fontFamily: 'var(--font-syne)',
-          fontWeight: 600,
-          fontSize: 20,
-          color: '#ffffff',
-          borderLeft: '3px solid #e8a44a',
-          paddingLeft: 16,
+          fontWeight: 700,
+          fontSize: 22,
+          color: 'var(--ink)',
           marginTop: 48,
-          marginBottom: 20,
+          marginBottom: 16,
           lineHeight: 1.3,
         }}
       >
@@ -199,12 +202,12 @@ function ContentBlock({ section }: { section: BlogSection }) {
       <p
         style={{
           fontFamily: 'var(--font-instrument)',
-          fontSize: 17,
+          fontSize: 15,
           fontWeight: 400,
-          lineHeight: 1.9,
-          color: 'rgba(212,208,200,0.75)',
+          lineHeight: 1.8,
+          color: 'var(--ink2)',
           marginTop: 0,
-          marginBottom: 20,
+          marginBottom: 18,
         }}
       >
         {section.text}
@@ -220,8 +223,8 @@ function ContentBlock({ section }: { section: BlogSection }) {
           listStyle: 'none',
           display: 'flex',
           flexDirection: 'column',
-          gap: 12,
-          marginBottom: 20,
+          gap: 10,
+          marginBottom: 18,
         }}
       >
         {section.items.map((item, i) => (
@@ -229,9 +232,9 @@ function ContentBlock({ section }: { section: BlogSection }) {
             key={i}
             style={{
               fontFamily: 'var(--font-instrument)',
-              fontSize: 17,
+              fontSize: 15,
               lineHeight: 1.8,
-              color: 'rgba(212,208,200,0.75)',
+              color: 'var(--ink2)',
               paddingLeft: 20,
               position: 'relative',
             }}
@@ -240,12 +243,11 @@ function ContentBlock({ section }: { section: BlogSection }) {
               style={{
                 position: 'absolute',
                 left: 0,
-                top: '0.55em',
+                top: '0.6em',
                 width: 5,
                 height: 5,
                 borderRadius: '50%',
-                backgroundColor: '#e8a44a',
-                opacity: 0.6,
+                backgroundColor: 'var(--acc)',
                 display: 'inline-block',
               }}
             />
@@ -257,17 +259,39 @@ function ContentBlock({ section }: { section: BlogSection }) {
   }
 
   if (section.type === 'code') {
+    const isBlock = section.text && section.text.includes('\n')
+    if (isBlock) {
+      return (
+        <pre
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 13,
+            background: 'var(--bg2)',
+            border: '1px solid var(--border)',
+            borderRadius: 4,
+            padding: '20px 24px',
+            color: 'var(--ink2)',
+            overflowX: 'auto',
+            marginBottom: 18,
+            lineHeight: 1.6,
+          }}
+        >
+          <code>{section.text}</code>
+        </pre>
+      )
+    }
     return (
       <code
         style={{
-          fontFamily: 'monospace',
-          fontSize: 14,
-          backgroundColor: 'rgba(255,255,255,0.04)',
-          padding: '4px 10px',
-          borderRadius: 3,
-          color: 'rgba(212,208,200,0.8)',
+          fontFamily: 'var(--font-mono)',
+          fontSize: 13,
+          background: 'var(--bg2)',
+          border: '1px solid var(--border)',
+          borderRadius: 4,
+          padding: '2px 6px',
+          color: 'var(--ink2)',
           display: 'inline-block',
-          marginBottom: 20,
+          marginBottom: 18,
         }}
       >
         {section.text}

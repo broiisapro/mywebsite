@@ -1,6 +1,7 @@
 import Nav from '@/components/Nav'
 import Hero from '@/components/Hero'
 import Marquee from '@/components/Marquee'
+import Stats from '@/components/Stats'
 import Work from '@/components/Work'
 import About from '@/components/About'
 import ContactSection from '@/components/ContactSection'
@@ -15,6 +16,7 @@ export default function Home() {
       <main>
         <Hero />
         <Marquee />
+        <Stats />
         <Work />
         <About />
         <ContactSection />

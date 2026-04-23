@@ -5,10 +5,12 @@ import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
 import { projects, type Project } from '@/data/portfolio'
 
+const AI_TAG_RE = /ai|llm|cv|voice|fine.?tun|claude|gpt|vision/i
+
 const GitHubIcon = () => (
   <svg
-    width="14"
-    height="14"
+    width="13"
+    height="13"
     viewBox="0 0 16 16"
     fill="currentColor"
     aria-hidden="true"
@@ -29,41 +31,102 @@ export default function Work() {
       style={{
         maxWidth: 1200,
         margin: '0 auto',
-        padding: '72px 48px',
-        scrollMarginTop: '80px',
+        padding: '72px 48px 0',
+        scrollMarginTop: 80,
       }}
     >
-      {/* Header row */}
+      {/* Section label */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.5 }}
         style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: 32,
+          fontFamily: 'var(--font-mono)',
+          fontSize: 10,
+          letterSpacing: '0.16em',
+          textTransform: 'uppercase',
+          color: 'var(--ink3)',
+          borderBottom: '1px solid var(--border)',
+          paddingBottom: 10,
+          marginBottom: 24,
         }}
       >
-        <span className="label">Selected Work</span>
-        <span
-          style={{
-            fontFamily: 'var(--font-syne)',
-            fontSize: 11,
-            color: 'rgba(212,208,200,0.2)',
-            letterSpacing: '0.06em',
-          }}
-        >
-          {`${projects.length.toString().padStart(2, '0')} Projects`}
-        </span>
+        Selected work · {projects.length} projects
       </motion.div>
 
-      {/* Project list */}
+      {/* Column headers */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '2.5fr 1.5fr 80px',
+          padding: '0 0 10px',
+          borderBottom: '2px solid var(--ink)',
+          marginBottom: 0,
+        }}
+        className="work-cols"
+      >
+        {['Project', 'Stack', ''].map((col) => (
+          <span
+            key={col}
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: 9,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              color: 'var(--ink3)',
+            }}
+          >
+            {col}
+          </span>
+        ))}
+      </div>
+
+      {/* Project rows */}
       <div>
         {projects.map((project, i) => (
           <ProjectRow key={project.name} project={project} index={i} inView={inView} />
         ))}
       </div>
+
+      {/* View all link */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.5, delay: 0.5 }}
+        style={{ marginTop: 28 }}
+      >
+        <a
+          href="/projects"
+          style={{
+            fontFamily: 'var(--font-instrument)',
+            fontWeight: 700,
+            fontSize: 11,
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            color: 'var(--ink)',
+            textDecoration: 'none',
+            borderBottom: '2px solid var(--acc)',
+            paddingBottom: 1,
+            transition: 'color 0.2s ease',
+            display: 'inline-block',
+          }}
+          onMouseEnter={(e) => {
+            ;(e.currentTarget as HTMLAnchorElement).style.color = 'var(--acc)'
+          }}
+          onMouseLeave={(e) => {
+            ;(e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink)'
+          }}
+        >
+          View all projects →
+        </a>
+      </motion.div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          #work { padding-left: 24px !important; padding-right: 24px !important; }
+          .work-cols { display: none !important; }
+        }
+      `}</style>
     </section>
   )
 }
@@ -78,32 +141,36 @@ function ProjectRow({
   inView: boolean
 }) {
   const blogHref = `/blog/${project.blogSlug}`
-  const hasCollaborator = !!project.collaborator
+
+  const handleRowClick = () => {
+    window.location.href = blogHref
+  }
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: 0.1 + index * 0.05 }}
+      transition={{ duration: 0.5, delay: 0.1 + index * 0.07 }}
       className="project-row"
+      onClick={handleRowClick}
       style={{
         display: 'grid',
-        gridTemplateColumns: '2fr 3fr 1.5fr auto',
+        gridTemplateColumns: '2.5fr 1.5fr 80px',
         alignItems: 'center',
-        borderTop: '1px solid rgba(255,255,255,0.05)',
-        padding: '22px 0',
+        borderBottom: '1px solid var(--border)',
+        padding: '16px 0',
         paddingLeft: 0,
         marginLeft: 0,
-        transition: 'all 0.25s ease',
-        cursor: 'none',
+        cursor: 'pointer',
+        transition: 'all 0.15s ease',
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement
-        el.style.backgroundColor = 'rgba(232,164,74,0.03)'
-        el.style.paddingLeft = '12px'
-        el.style.marginLeft = '-12px'
+        el.style.backgroundColor = 'var(--bg2)'
+        el.style.paddingLeft = '8px'
+        el.style.marginLeft = '-8px'
         const arrow = el.querySelector('.project-arrow') as HTMLElement
-        if (arrow) arrow.style.color = '#e8a44a'
+        if (arrow) arrow.style.color = 'var(--acc)'
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLElement
@@ -111,141 +178,127 @@ function ProjectRow({
         el.style.paddingLeft = '0'
         el.style.marginLeft = '0'
         const arrow = el.querySelector('.project-arrow') as HTMLElement
-        if (arrow) arrow.style.color = 'rgba(212,208,200,0.18)'
+        if (arrow) arrow.style.color = 'var(--border2)'
       }}
     >
-      {/* Name + badges */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' as const }}>
+      {/* Left: name + description + badge */}
+      <div>
         <span
           style={{
             fontFamily: 'var(--font-syne)',
             fontWeight: 700,
-            fontSize: 17,
-            color: 'rgba(255,255,255,0.85)',
+            fontSize: 15,
+            letterSpacing: '-0.01em',
+            color: 'var(--ink)',
+            display: 'block',
           }}
-          className="project-name"
         >
           {project.name}
         </span>
-        {project.github && (
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${project.name} GitHub repository`}
-            style={{
-              color: 'rgba(212,208,200,0.2)',
-              textDecoration: 'none',
-              display: 'inline-flex',
-              alignItems: 'center',
-              transition: 'color 0.2s ease',
-            }}
-            onMouseEnter={(e) => {
-              const el = e.currentTarget as HTMLAnchorElement
-              el.style.color = '#e8a44a'
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget as HTMLAnchorElement
-              el.style.color = 'rgba(212,208,200,0.2)'
-            }}
-          >
-            <GitHubIcon />
-          </a>
-        )}
+        <span
+          className="project-desc"
+          style={{
+            fontFamily: 'var(--font-instrument)',
+            fontSize: 11,
+            color: 'var(--ink3)',
+            display: 'block',
+            marginTop: 2,
+          }}
+        >
+          {project.description}
+        </span>
         {project.featured && (
           <span
             style={{
-              fontSize: 10,
-              color: '#e8a44a',
-              backgroundColor: 'rgba(232,164,74,0.15)',
-              borderRadius: 20,
-              padding: '3px 10px',
-              letterSpacing: '0.04em',
-              fontFamily: 'var(--font-syne)',
-              fontWeight: 700,
+              display: 'inline-block',
+              marginTop: 5,
+              fontSize: 9,
+              padding: '2px 7px',
+              background: 'var(--acc-bg)',
+              color: 'var(--acc)',
+              borderRadius: 3,
+              fontWeight: 600,
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
+              fontFamily: 'var(--font-instrument)',
             }}
           >
             Featured
           </span>
         )}
-        {!project.github && !hasCollaborator && (
-          <span
-            style={{
-              fontSize: 10,
-              color: 'rgba(212,208,200,0.2)',
-              fontFamily: 'var(--font-instrument)',
-              letterSpacing: '0.02em',
-            }}
-          >
-            Private
-          </span>
-        )}
       </div>
 
-      {/* Description */}
-      <span
-        style={{
-          fontSize: 13,
-          color: 'rgba(212,208,200,0.4)',
-          lineHeight: 1.5,
-          paddingRight: 24,
-        }}
-        className="project-desc"
-      >
-        {project.description}
-      </span>
-
-      {/* Tags */}
+      {/* Middle: tags */}
       <div
-        style={{ display: 'flex', gap: 6, flexWrap: 'wrap' as const }}
         className="project-tags"
+        style={{ display: 'flex', flexWrap: 'wrap', gap: 5, alignItems: 'center' }}
       >
-        {project.tags.map((tag) => (
-          <span
-            key={tag}
+        {project.tags.map((tag) => {
+          const isAI = AI_TAG_RE.test(tag)
+          return (
+            <span
+              key={tag}
+              style={{
+                fontSize: 9,
+                padding: '3px 7px',
+                background: isAI ? 'var(--acc-bg)' : 'var(--bg3)',
+                color: isAI ? 'var(--acc)' : 'var(--ink2)',
+                borderRadius: 3,
+                fontWeight: 500,
+                letterSpacing: '0.04em',
+                textTransform: 'uppercase',
+                fontFamily: 'var(--font-instrument)',
+              }}
+            >
+              {tag}
+            </span>
+          )
+        })}
+        {project.github && (
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${project.name} GitHub`}
+            onClick={(e) => e.stopPropagation()}
             style={{
-              fontSize: 10,
-              color: 'rgba(232,164,74,0.6)',
-              border: '1px solid rgba(232,164,74,0.15)',
-              borderRadius: 20,
-              padding: '3px 10px',
-              letterSpacing: '0.02em',
-              fontFamily: 'var(--font-instrument)',
+              color: 'var(--ink3)',
+              textDecoration: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              transition: 'color 0.2s ease',
+              marginLeft: 2,
+            }}
+            onMouseEnter={(e) => {
+              ;(e.currentTarget as HTMLAnchorElement).style.color = 'var(--acc)'
+            }}
+            onMouseLeave={(e) => {
+              ;(e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink3)'
             }}
           >
-            {tag}
-          </span>
-        ))}
-        {!project.github && project.collaborator && (
-          <span
-            style={{
-              fontSize: 11,
-              color: 'rgba(212,208,200,0.25)',
-              fontFamily: 'var(--font-instrument)',
-              letterSpacing: '0.02em',
-            }}
-          >
-            w/ {project.collaborator}
-          </span>
+            <GitHubIcon />
+          </a>
         )}
       </div>
 
-      {/* Arrow — always links to blog post */}
-      <Link
-        href={blogHref}
-        className="project-arrow"
-        style={{
-          fontSize: 18,
-          color: 'rgba(212,208,200,0.18)',
-          transition: 'color 0.25s ease',
-          paddingLeft: 16,
-          userSelect: 'none',
-          textDecoration: 'none',
-          display: 'inline-block',
-        }}
-      >
-        ↗
-      </Link>
+      {/* Right: arrow */}
+      <div style={{ textAlign: 'right' }}>
+        <Link
+          href={blogHref}
+          className="project-arrow"
+          onClick={(e) => e.stopPropagation()}
+          style={{
+            fontSize: 16,
+            color: 'var(--border2)',
+            transition: 'color 0.15s ease',
+            fontFamily: 'var(--font-instrument)',
+            textDecoration: 'none',
+            display: 'inline-block',
+          }}
+        >
+          ↗
+        </Link>
+      </div>
     </motion.div>
   )
 }

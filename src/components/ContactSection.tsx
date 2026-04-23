@@ -4,18 +4,11 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { identity } from '@/data/portfolio'
 
-const contactRows = [
+const leftRows = [
   {
     label: 'Email',
     value: 'moksh.siruvani@gmail.com',
     href: 'mailto:moksh.siruvani@gmail.com',
-    external: false,
-  },
-  {
-    label: 'Phone',
-    value: '+1-437-265-4886',
-    href: null,
-    external: false,
   },
   {
     label: 'LinkedIn',
@@ -29,12 +22,12 @@ const contactRows = [
     href: identity.github,
     external: true,
   },
-  {
-    label: 'Location',
-    value: identity.location,
-    href: null,
-    external: false,
-  },
+]
+
+const rightRows = [
+  { label: 'Location', value: 'Whitby, Ontario', href: null },
+  { label: 'Status', value: 'Open to work', href: null, accent: true },
+  { label: 'Phone', value: 'On request', href: null },
 ]
 
 export default function ContactSection() {
@@ -47,196 +40,204 @@ export default function ContactSection() {
       id="contact"
       ref={ref}
       style={{
-        borderTop: '1px solid rgba(255,255,255,0.05)',
         maxWidth: 1200,
         margin: '0 auto',
-        padding: '72px 48px',
+        padding: '72px 48px 0',
+        scrollMarginTop: 80,
       }}
     >
+      {/* Section label */}
+      <div
+        style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: 10,
+          letterSpacing: '0.16em',
+          textTransform: 'uppercase',
+          color: 'var(--ink3)',
+          borderBottom: '1px solid var(--border)',
+          paddingBottom: 10,
+          marginBottom: 24,
+        }}
+      >
+        Contact
+      </div>
+
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          gap: 80,
-          alignItems: 'start',
         }}
         className="contact-grid"
       >
-        {/* Left — display text */}
+        {/* Left column */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
+          style={{
+            borderRight: '1px solid var(--border)',
+            paddingRight: 48,
+          }}
+          className="contact-left"
         >
-          <div style={{ marginBottom: 24 }}>
-            <span
-              style={{
-                fontFamily: 'var(--font-syne)',
-                fontWeight: 800,
-                fontSize: 'clamp(36px, 4vw, 52px)',
-                letterSpacing: '-0.03em',
-                lineHeight: 1.05,
-                color: '#ffffff',
-                display: 'block',
-              }}
-            >
-              Let&apos;s build
-            </span>
-            <span
-              style={{
-                fontFamily: 'var(--font-syne)',
-                fontWeight: 800,
-                fontSize: 'clamp(36px, 4vw, 52px)',
-                letterSpacing: '-0.03em',
-                lineHeight: 1.05,
-                color: '#e8a44a',
-                display: 'block',
-              }}
-            >
-              something.
-            </span>
-          </div>
-          <p
-            style={{
-              fontFamily: 'var(--font-instrument)',
-              fontSize: 15,
-              lineHeight: 1.7,
-              color: 'rgba(212,208,200,0.45)',
-              maxWidth: 320,
-            }}
-          >
-            I&apos;m open to internships, fellowships, and interesting projects.
-            Reach out.
-          </p>
+          {leftRows.map((row, i) => (
+            <ContactRow
+              key={row.label}
+              row={row}
+              index={i}
+              inView={inView}
+            />
+          ))}
         </motion.div>
 
-        {/* Right — contact details */}
+        {/* Right column */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
-          style={{ display: 'flex', flexDirection: 'column', gap: 20 }}
+          style={{ paddingLeft: 48 }}
+          className="contact-right"
         >
-          {contactRows.map((row, i) => (
-            <motion.div
+          {rightRows.map((row, i) => (
+            <ContactRow
               key={row.label}
-              initial={{ opacity: 0, y: 8 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: 0.15 + i * 0.06 }}
-            >
-              <span
-                style={{
-                  fontFamily: 'var(--font-syne)',
-                  fontSize: 10,
-                  textTransform: 'uppercase' as const,
-                  letterSpacing: '0.14em',
-                  color: 'rgba(212,208,200,0.25)',
-                  display: 'block',
-                  marginBottom: 4,
-                }}
-              >
-                {row.label}
-              </span>
-              {row.href ? (
-                <a
-                  href={row.href}
-                  target={row.external ? '_blank' : undefined}
-                  rel={row.external ? 'noopener noreferrer' : undefined}
-                  style={{
-                    fontFamily: 'var(--font-instrument)',
-                    fontSize: 14,
-                    color: 'rgba(255,255,255,0.75)',
-                    textDecoration: 'none',
-                    transition: 'color 0.2s ease',
-                    display: 'inline-block',
-                  }}
-                  onMouseEnter={(e) =>
-                    ((e.currentTarget as HTMLAnchorElement).style.color = '#e8a44a')
-                  }
-                  onMouseLeave={(e) =>
-                    ((e.currentTarget as HTMLAnchorElement).style.color =
-                      'rgba(255,255,255,0.75)')
-                  }
-                >
-                  {row.value}
-                </a>
-              ) : (
-                <span
-                  style={{
-                    fontFamily: 'var(--font-instrument)',
-                    fontSize: 14,
-                    color: 'rgba(255,255,255,0.75)',
-                  }}
-                >
-                  {row.value}
-                </span>
-              )}
-            </motion.div>
+              row={row}
+              index={i}
+              inView={inView}
+            />
           ))}
-
-          {/* Resume download row */}
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.4, delay: 0.15 + contactRows.length * 0.06 }}
-          >
-            <span
-              style={{
-                fontFamily: 'var(--font-syne)',
-                fontSize: 10,
-                textTransform: 'uppercase' as const,
-                letterSpacing: '0.14em',
-                color: 'rgba(212,208,200,0.25)',
-                display: 'block',
-                marginBottom: 8,
-              }}
-            >
-              Resume
-            </span>
-            <a
-              href={`${basePath}/resume.pdf`}
-              download="Moksh_Siruvani_Resume.pdf"
-              style={{
-                fontFamily: 'var(--font-syne)',
-                fontWeight: 700,
-                fontSize: 11,
-                textTransform: 'uppercase' as const,
-                letterSpacing: '0.08em',
-                color: '#0c0c0c',
-                backgroundColor: '#e8a44a',
-                padding: '9px 20px',
-                borderRadius: 2,
-                textDecoration: 'none',
-                display: 'inline-block',
-                transition: 'opacity 0.2s ease',
-              }}
-              onMouseEnter={(e) =>
-                ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.85')
-              }
-              onMouseLeave={(e) =>
-                ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')
-              }
-            >
-              Download PDF
-            </a>
-          </motion.div>
         </motion.div>
       </div>
+
+      {/* Resume download button */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        style={{ marginTop: 28 }}
+      >
+        <a
+          href={`${basePath}/resume.pdf`}
+          download="Moksh_Siruvani_Resume.pdf"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 10,
+            padding: '13px 28px',
+            background: 'var(--ink)',
+            color: 'var(--bg)',
+            fontFamily: 'var(--font-instrument)',
+            fontWeight: 700,
+            fontSize: 12,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            borderRadius: 4,
+            textDecoration: 'none',
+            transition: 'background 0.2s ease, transform 0.2s ease',
+          }}
+          onMouseEnter={(e) => {
+            const el = e.currentTarget as HTMLAnchorElement
+            el.style.background = 'var(--acc)'
+            el.style.transform = 'translateY(-2px)'
+          }}
+          onMouseLeave={(e) => {
+            const el = e.currentTarget as HTMLAnchorElement
+            el.style.background = 'var(--ink)'
+            el.style.transform = 'none'
+          }}
+        >
+          Download Resume
+        </a>
+      </motion.div>
 
       <style>{`
         @media (max-width: 768px) {
           .contact-grid {
             grid-template-columns: 1fr !important;
-            gap: 48px !important;
+          }
+          .contact-left {
+            border-right: none !important;
+            padding-right: 0 !important;
+          }
+          .contact-right {
+            padding-left: 0 !important;
           }
         }
         @media (max-width: 640px) {
-          #contact {
-            padding-left: 24px !important;
-            padding-right: 24px !important;
-          }
+          #contact { padding-left: 24px !important; padding-right: 24px !important; }
         }
       `}</style>
     </section>
+  )
+}
+
+function ContactRow({
+  row,
+  index,
+  inView,
+}: {
+  row: { label: string; value: string; href?: string | null; external?: boolean; accent?: boolean }
+  index: number
+  inView: boolean
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.4, delay: 0.15 + index * 0.07 }}
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '14px 0',
+        borderBottom: '1px solid var(--border)',
+      }}
+    >
+      <span
+        style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: 10,
+          letterSpacing: '0.12em',
+          textTransform: 'uppercase',
+          color: 'var(--ink3)',
+        }}
+      >
+        {row.label}
+      </span>
+      {row.href ? (
+        <a
+          href={row.href}
+          target={row.external ? '_blank' : undefined}
+          rel={row.external ? 'noopener noreferrer' : undefined}
+          style={{
+            fontFamily: 'var(--font-instrument)',
+            fontWeight: 500,
+            fontSize: 13,
+            color: 'var(--acc)',
+            textDecoration: 'none',
+            transition: 'text-decoration 0.2s ease',
+          }}
+          onMouseEnter={(e) => {
+            ;(e.currentTarget as HTMLAnchorElement).style.textDecoration = 'underline'
+          }}
+          onMouseLeave={(e) => {
+            ;(e.currentTarget as HTMLAnchorElement).style.textDecoration = 'none'
+          }}
+        >
+          {row.value}
+        </a>
+      ) : (
+        <span
+          style={{
+            fontFamily: 'var(--font-instrument)',
+            fontWeight: 500,
+            fontSize: 13,
+            color: row.accent ? 'var(--acc)' : 'var(--ink)',
+          }}
+        >
+          {row.value}
+        </span>
+      )}
+    </motion.div>
   )
 }

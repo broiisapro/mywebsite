@@ -15,77 +15,106 @@ export default function About() {
       style={{
         maxWidth: 1200,
         margin: '0 auto',
-        padding: '72px 48px',
-        borderTop: '1px solid rgba(255,255,255,0.05)',
-        scrollMarginTop: 120,
+        padding: '72px 48px 0',
+        scrollMarginTop: 80,
       }}
     >
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
+      {/* Section label */}
+      <div
+        style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: 10,
+          letterSpacing: '0.16em',
+          textTransform: 'uppercase',
+          color: 'var(--ink3)',
+          borderBottom: '1px solid var(--border)',
+          paddingBottom: 10,
+          marginBottom: 24,
+        }}
+      >
+        About
+      </div>
+
+      <div
         style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          gap: 80,
+          gap: 56,
         }}
         className="about-grid"
       >
         {/* Left: bio */}
-        <div>
+        <motion.div
+          initial={{ opacity: 0, x: -24 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.6 }}
+        >
           <p
             style={{
               fontFamily: 'var(--font-instrument)',
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: 400,
-              lineHeight: 1.9,
-              color: 'rgba(212,208,200,0.55)',
+              lineHeight: 1.75,
+              color: 'var(--ink2)',
+              marginBottom: 16,
             }}
           >
             I&apos;m{' '}
-            <strong style={{ color: 'rgba(212,208,200,0.85)', fontWeight: 400 }}>
-              16, graduating a year early,
+            <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>
+              Moksh Siruvani
             </strong>{' '}
-            and building things that actually ship. Founded my school&apos;s Coding Club.
-            DECA ICDC Provincial Champion. FRC Blue Banner first year in. Ranked{' '}
-            <strong style={{ color: 'rgba(212,208,200,0.85)', fontWeight: 400 }}>
-              5th globally
-            </strong>{' '}
-            in Hack Club High Seas.
+            — 16 years old, graduating a year early, and based in Whitby, Ontario.
+            I&apos;ve been building things since I was 11 and haven&apos;t really stopped.
           </p>
           <p
             style={{
               fontFamily: 'var(--font-instrument)',
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: 400,
-              lineHeight: 1.9,
-              color: 'rgba(212,208,200,0.55)',
-              marginTop: 24,
+              lineHeight: 1.75,
+              color: 'var(--ink2)',
+              marginBottom: 16,
             }}
           >
-            I like making robots, scraping the web, and automating things that
-            shouldn&apos;t be manual.
+            My work spans{' '}
+            <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>
+              autonomous AI platforms, computer vision, FRC robotics,
+            </strong>{' '}
+            and developer tooling. I care about shipping real things — not just demos.
           </p>
-        </div>
+          <p
+            style={{
+              fontFamily: 'var(--font-instrument)',
+              fontSize: 14,
+              fontWeight: 400,
+              lineHeight: 1.75,
+              color: 'var(--ink2)',
+            }}
+          >
+            Ranked{' '}
+            <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>#5 globally</strong>{' '}
+            in Hack Club High Seas. Always working on something new.
+          </p>
+        </motion.div>
 
         {/* Right: skills */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-          {Object.entries(skills).map(([group, items], gi) => (
-            <motion.div
-              key={group}
-              initial={{ opacity: 0, y: 12 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.15 + gi * 0.08 }}
-            >
+        <motion.div
+          initial={{ opacity: 0, x: 24 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          style={{ display: 'flex', flexDirection: 'column', gap: 28 }}
+        >
+          {Object.entries(skills).map(([group, items]) => (
+            <div key={group}>
               <span
                 style={{
-                  fontFamily: 'var(--font-syne)',
-                  fontSize: 10,
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 9,
                   textTransform: 'uppercase',
                   letterSpacing: '0.14em',
-                  color: 'rgba(212,208,200,0.25)',
+                  color: 'var(--ink3)',
                   display: 'block',
-                  marginBottom: 12,
+                  marginBottom: 10,
                 }}
               >
                 {group}
@@ -95,17 +124,20 @@ export default function About() {
                   <SkillPill key={skill} label={skill} />
                 ))}
               </div>
-            </motion.div>
+            </div>
           ))}
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
 
       <style>{`
         @media (max-width: 768px) {
           .about-grid {
             grid-template-columns: 1fr !important;
-            gap: 48px !important;
+            gap: 40px !important;
           }
+        }
+        @media (max-width: 640px) {
+          #about { padding-left: 24px !important; padding-right: 24px !important; }
         }
       `}</style>
     </section>
@@ -117,24 +149,26 @@ function SkillPill({ label }: { label: string }) {
     <span
       style={{
         fontFamily: 'var(--font-instrument)',
-        fontSize: 12,
-        color: 'rgba(212,208,200,0.5)',
-        backgroundColor: 'rgba(255,255,255,0.04)',
-        borderRadius: 2,
-        padding: '5px 14px',
-        transition: 'color 0.2s ease, background-color 0.2s ease',
+        fontWeight: 500,
+        fontSize: 11,
+        padding: '5px 10px',
+        background: 'var(--bg2)',
+        color: 'var(--ink2)',
+        border: '0.5px solid var(--border)',
+        borderRadius: 4,
+        transition: 'background 0.2s ease, border-color 0.2s ease',
         cursor: 'default',
         display: 'inline-block',
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement
-        el.style.color = '#e8a44a'
-        el.style.backgroundColor = 'rgba(232,164,74,0.07)'
+        el.style.background = 'var(--bg3)'
+        el.style.borderColor = 'var(--border2)'
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLElement
-        el.style.color = 'rgba(212,208,200,0.5)'
-        el.style.backgroundColor = 'rgba(255,255,255,0.04)'
+        el.style.background = 'var(--bg2)'
+        el.style.borderColor = 'var(--border)'
       }}
     >
       {label}

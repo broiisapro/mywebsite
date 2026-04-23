@@ -13,7 +13,6 @@ export default function CustomCursor() {
   const rafRef = useRef<number | null>(null)
 
   useEffect(() => {
-    // Only show on non-touch devices
     if (window.matchMedia('(hover: none)').matches) return
 
     const dot = dotRef.current
@@ -120,7 +119,6 @@ export default function CustomCursor() {
     window.addEventListener('resize', onViewportChange, { passive: true })
     rafRef.current = requestAnimationFrame(animate)
 
-    // Keep the interactive map updated for dynamic DOM content.
     const observer = new MutationObserver(() => {
       collectInteractives()
       updateTarget()

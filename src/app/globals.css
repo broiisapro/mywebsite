@@ -3,13 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --bg: #0c0c0c;
-  --body: #d4d0c8;
-  --white: #ffffff;
-  --accent: #e8a44a;
-  --border: rgba(255, 255, 255, 0.05);
-  --muted: rgba(212, 208, 200, 0.4);
-  --very-muted: rgba(212, 208, 200, 0.18);
+  --bg:      #f5f0e8;
+  --bg2:     #ede8de;
+  --bg3:     #e4ddd0;
+  --ink:     #1a1508;
+  --ink2:    #4a4030;
+  --ink3:    #8a7a62;
+  --acc:     #2d7a52;
+  --acc2:    #3d9e6b;
+  --acc-bg:  #eaf4ee;
+  --border:  rgba(26, 21, 8, 0.12);
+  --border2: rgba(26, 21, 8, 0.22);
 }
 
 * {
@@ -24,7 +28,7 @@ html {
 
 body {
   background-color: var(--bg);
-  color: var(--body);
+  color: var(--ink2);
   font-family: var(--font-instrument), sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
@@ -40,9 +44,9 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 8px;
-  height: 8px;
-  background: var(--accent);
+  width: 10px;
+  height: 10px;
+  background: var(--ink);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
@@ -53,84 +57,68 @@ body {
 }
 
 .cursor-dot.hovered {
-  width: 20px;
-  height: 20px;
-  background: transparent;
-  border: 1.5px solid var(--accent);
+  width: 40px;
+  height: 40px;
+  background: rgba(45, 122, 82, 0.12);
+  border: 2px solid var(--acc);
 }
 
-/* ─── Marquee ────────────────────────────────────────────────── */
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+/* ─── Ticker / Marquee ───────────────────────────────────────── */
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 .marquee-track {
-  animation: marquee 22s linear infinite;
+  animation: ticker 28s linear infinite;
   display: flex;
   white-space: nowrap;
   width: max-content;
 }
 
-.marquee-track:hover {
+.marquee-wrap:hover .marquee-track {
   animation-play-state: paused;
 }
 
+/* ─── Nav pulse dot ──────────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1);   opacity: 1;   }
+  50%       { transform: scale(1.4); opacity: 0.4; }
+}
+
 /* ─── Scrollbar ──────────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 2px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(232, 164, 74, 0.3);
-}
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--acc); }
 
 /* ─── Selection ──────────────────────────────────────────────── */
 ::selection {
-  background: rgba(232, 164, 74, 0.2);
-  color: #fff;
+  background: var(--acc-bg);
+  color: var(--acc);
 }
 
 :focus-visible {
-  outline: 2px solid #e8a44a;
+  outline: 2px solid var(--acc);
   outline-offset: 3px;
   border-radius: 3px;
 }
 
-/* ─── Utility ────────────────────────────────────────────────── */
-.label {
-  font-family: var(--font-syne), sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--muted);
-}
-
-/* ─── Project Row — last item border ────────────────────────── */
-.project-row:last-child {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+/* ─── Blog row hover (server component) ─────────────────────── */
+.blog-row {
+  transition: all 0.15s ease;
 }
 
 .blog-row:hover,
 .blog-row:focus-visible {
-  padding-left: 12px !important;
-  margin-left: -12px !important;
-  background-color: rgba(232, 164, 74, 0.03) !important;
+  padding-left: 8px !important;
+  margin-left: -8px !important;
+  background-color: var(--bg2) !important;
 }
 
 .blog-row:hover .blog-arrow,
 .blog-row:focus-visible .blog-arrow {
-  color: #e8a44a !important;
+  color: var(--acc) !important;
 }
 
 /* ─── Responsive: project rows on mobile ────────────────────── */
@@ -138,24 +126,7 @@ body {
   .project-row {
     grid-template-columns: 1fr auto !important;
   }
-  .project-desc,
   .project-tags {
     display: none !important;
-  }
-}
-
-/* ─── Responsive: nav padding ───────────────────────────────── */
-@media (max-width: 640px) {
-  nav > div {
-    padding-left: 24px !important;
-    padding-right: 24px !important;
-  }
-}
-
-/* ─── Responsive: section padding ───────────────────────────── */
-@media (max-width: 640px) {
-  section {
-    padding-left: 24px !important;
-    padding-right: 24px !important;
   }
 }
