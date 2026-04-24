@@ -58,10 +58,9 @@ export default function Work() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: '2.5fr 1.5fr 80px',
+          gridTemplateColumns: '2.5fr 1.5fr 32px',
           padding: '0 0 10px',
           borderBottom: '2px solid var(--ink)',
-          marginBottom: 0,
         }}
         className="work-cols"
       >
@@ -131,6 +130,18 @@ export default function Work() {
   )
 }
 
+const ROW_BASE_STYLE = {
+  display: 'grid',
+  gridTemplateColumns: '2.5fr 1.5fr 32px',
+  alignItems: 'center',
+  borderBottom: '1px solid var(--border)',
+  padding: '16px 0',
+  paddingLeft: 0,
+  marginLeft: 0,
+  transition: 'all 0.15s ease',
+  textDecoration: 'none',
+} as const
+
 function ProjectRow({
   project,
   index,
@@ -141,46 +152,10 @@ function ProjectRow({
   inView: boolean
 }) {
   const blogHref = `/blog/${project.blogSlug}`
+  const hasSlug = !!project.blogSlug
 
-  const handleRowClick = () => {
-    window.location.href = blogHref
-  }
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: 0.1 + index * 0.07 }}
-      className="project-row"
-      onClick={handleRowClick}
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '2.5fr 1.5fr 80px',
-        alignItems: 'center',
-        borderBottom: '1px solid var(--border)',
-        padding: '16px 0',
-        paddingLeft: 0,
-        marginLeft: 0,
-        cursor: 'pointer',
-        transition: 'all 0.15s ease',
-      }}
-      onMouseEnter={(e) => {
-        const el = e.currentTarget as HTMLElement
-        el.style.backgroundColor = 'var(--bg2)'
-        el.style.paddingLeft = '8px'
-        el.style.marginLeft = '-8px'
-        const arrow = el.querySelector('.project-arrow') as HTMLElement
-        if (arrow) arrow.style.color = 'var(--acc)'
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget as HTMLElement
-        el.style.backgroundColor = 'transparent'
-        el.style.paddingLeft = '0'
-        el.style.marginLeft = '0'
-        const arrow = el.querySelector('.project-arrow') as HTMLElement
-        if (arrow) arrow.style.color = 'var(--border2)'
-      }}
-    >
+  const rowContent = (
+    <>
       {/* Left: name + description + badge */}
       <div>
         <span
@@ -228,7 +203,7 @@ function ProjectRow({
         )}
       </div>
 
-      {/* Middle: tags */}
+      {/* Middle: tags + GitHub icon */}
       <div
         className="project-tags"
         style={{ display: 'flex', flexWrap: 'wrap', gap: 5, alignItems: 'center' }}
@@ -281,24 +256,71 @@ function ProjectRow({
         )}
       </div>
 
-      {/* Right: arrow */}
-      <div style={{ textAlign: 'right' }}>
+      {/* Right: visual arrow affordance */}
+      <div
+        className="project-arrow"
+        style={{
+          textAlign: 'right',
+          fontFamily: 'var(--font-instrument)',
+          fontSize: 14,
+          color: 'var(--ink3)',
+          transition: 'color 0.15s ease',
+        }}
+      >
+        →
+      </div>
+    </>
+  )
+
+  const motionProps = {
+    initial: { opacity: 0, y: 16 },
+    animate: inView ? { opacity: 1, y: 0 } : {},
+    transition: { duration: 0.5, delay: 0.1 + index * 0.07 },
+    className: 'project-row',
+  }
+
+  if (hasSlug) {
+    return (
+      <motion.div {...motionProps}>
         <Link
           href={blogHref}
-          className="project-arrow"
-          onClick={(e) => e.stopPropagation()}
           style={{
-            fontSize: 16,
-            color: 'var(--border2)',
-            transition: 'color 0.15s ease',
-            fontFamily: 'var(--font-instrument)',
-            textDecoration: 'none',
-            display: 'inline-block',
+            ...ROW_BASE_STYLE,
+            cursor: 'pointer',
+            display: 'grid',
+          }}
+          onMouseEnter={(e) => {
+            const el = e.currentTarget as HTMLElement
+            el.style.backgroundColor = 'var(--bg2)'
+            el.style.paddingLeft = '8px'
+            el.style.marginLeft = '-8px'
+            const arrow = el.querySelector('.project-arrow') as HTMLElement
+            if (arrow) arrow.style.color = 'var(--acc)'
+          }}
+          onMouseLeave={(e) => {
+            const el = e.currentTarget as HTMLElement
+            el.style.backgroundColor = 'transparent'
+            el.style.paddingLeft = '0'
+            el.style.marginLeft = '0'
+            const arrow = el.querySelector('.project-arrow') as HTMLElement
+            if (arrow) arrow.style.color = 'var(--ink3)'
           }}
         >
-          ↗
+          {rowContent}
         </Link>
-      </div>
+      </motion.div>
+    )
+  }
+
+  return (
+    <motion.div
+      {...motionProps}
+      style={{
+        ...ROW_BASE_STYLE,
+        cursor: 'default',
+      }}
+    >
+      {rowContent}
     </motion.div>
   )
 }

@@ -48,7 +48,7 @@ export default function Hero() {
               display: 'block',
             }}
           >
-            MOK
+            MOKSH
           </span>
         </motion.div>
         <motion.div
@@ -70,7 +70,7 @@ export default function Hero() {
               display: 'block',
             }}
           >
-            SH.
+            SIRUVANI
           </span>
         </motion.div>
       </h1>
