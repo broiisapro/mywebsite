@@ -1,7 +1,6 @@
 'use client'
 
 import { useRef } from 'react'
-import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
 import { projects, type Project } from '@/data/portfolio'
 
@@ -9,12 +8,12 @@ const AI_TAG_RE = /ai|llm|cv|voice|fine.?tun|claude|gpt|vision/i
 
 const GitHubIcon = () => (
   <svg
-    width="13"
-    height="13"
+    width="16"
+    height="16"
     viewBox="0 0 16 16"
     fill="currentColor"
     aria-hidden="true"
-    style={{ display: 'inline-block', verticalAlign: 'middle', flexShrink: 0 }}
+    style={{ display: 'block', flexShrink: 0 }}
   >
     <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
   </svg>
@@ -58,7 +57,7 @@ export default function Work() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: '2.5fr 1.5fr 32px',
+          gridTemplateColumns: '2.5fr 1.5fr 48px',
           padding: '0 0 10px',
           borderBottom: '2px solid var(--ink)',
         }}
@@ -130,18 +129,6 @@ export default function Work() {
   )
 }
 
-const ROW_BASE_STYLE = {
-  display: 'grid',
-  gridTemplateColumns: '2.5fr 1.5fr 32px',
-  alignItems: 'center',
-  borderBottom: '1px solid var(--border)',
-  padding: '16px 0',
-  paddingLeft: 0,
-  marginLeft: 0,
-  transition: 'all 0.15s ease',
-  textDecoration: 'none',
-} as const
-
 function ProjectRow({
   project,
   index,
@@ -151,11 +138,35 @@ function ProjectRow({
   index: number
   inView: boolean
 }) {
-  const blogHref = `/blog/${project.blogSlug}`
-  const hasSlug = !!project.blogSlug
-
-  const rowContent = (
-    <>
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: 0.1 + index * 0.07 }}
+      className="project-row"
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '2.5fr 1.5fr 48px',
+        alignItems: 'center',
+        borderBottom: '1px solid var(--border)',
+        padding: '16px 0',
+        paddingLeft: 0,
+        marginLeft: 0,
+        transition: 'background 0.15s ease, padding-left 0.15s ease, margin-left 0.15s ease',
+      }}
+      onMouseEnter={(e) => {
+        const el = e.currentTarget as HTMLElement
+        el.style.backgroundColor = 'var(--bg2)'
+        el.style.paddingLeft = '8px'
+        el.style.marginLeft = '-8px'
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget as HTMLElement
+        el.style.backgroundColor = 'transparent'
+        el.style.paddingLeft = '0'
+        el.style.marginLeft = '0'
+      }}
+    >
       {/* Left: name + description + badge */}
       <div>
         <span
@@ -203,7 +214,7 @@ function ProjectRow({
         )}
       </div>
 
-      {/* Middle: tags + GitHub icon */}
+      {/* Middle: tags */}
       <div
         className="project-tags"
         style={{ display: 'flex', flexWrap: 'wrap', gap: 5, alignItems: 'center' }}
@@ -229,23 +240,28 @@ function ProjectRow({
             </span>
           )
         })}
-        {project.github && (
+      </div>
+
+      {/* Right: GitHub link (if available) */}
+      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+        {project.github ? (
           <a
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`${project.name} GitHub`}
-            onClick={(e) => e.stopPropagation()}
+            aria-label={`${project.name} on GitHub`}
             style={{
-              color: 'var(--ink3)',
-              textDecoration: 'none',
               display: 'inline-flex',
               alignItems: 'center',
+              justifyContent: 'center',
+              width: 32,
+              height: 32,
+              color: 'var(--ink3)',
+              textDecoration: 'none',
               transition: 'color 0.2s ease',
-              marginLeft: 2,
             }}
             onMouseEnter={(e) => {
-              ;(e.currentTarget as HTMLAnchorElement).style.color = 'var(--acc)'
+              ;(e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink)'
             }}
             onMouseLeave={(e) => {
               ;(e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink3)'
@@ -253,74 +269,8 @@ function ProjectRow({
           >
             <GitHubIcon />
           </a>
-        )}
+        ) : null}
       </div>
-
-      {/* Right: visual arrow affordance */}
-      <div
-        className="project-arrow"
-        style={{
-          textAlign: 'right',
-          fontFamily: 'var(--font-instrument)',
-          fontSize: 14,
-          color: 'var(--ink3)',
-          transition: 'color 0.15s ease',
-        }}
-      >
-        →
-      </div>
-    </>
-  )
-
-  const motionProps = {
-    initial: { opacity: 0, y: 16 },
-    animate: inView ? { opacity: 1, y: 0 } : {},
-    transition: { duration: 0.5, delay: 0.1 + index * 0.07 },
-    className: 'project-row',
-  }
-
-  if (hasSlug) {
-    return (
-      <motion.div {...motionProps}>
-        <Link
-          href={blogHref}
-          style={{
-            ...ROW_BASE_STYLE,
-            cursor: 'pointer',
-            display: 'grid',
-          }}
-          onMouseEnter={(e) => {
-            const el = e.currentTarget as HTMLElement
-            el.style.backgroundColor = 'var(--bg2)'
-            el.style.paddingLeft = '8px'
-            el.style.marginLeft = '-8px'
-            const arrow = el.querySelector('.project-arrow') as HTMLElement
-            if (arrow) arrow.style.color = 'var(--acc)'
-          }}
-          onMouseLeave={(e) => {
-            const el = e.currentTarget as HTMLElement
-            el.style.backgroundColor = 'transparent'
-            el.style.paddingLeft = '0'
-            el.style.marginLeft = '0'
-            const arrow = el.querySelector('.project-arrow') as HTMLElement
-            if (arrow) arrow.style.color = 'var(--ink3)'
-          }}
-        >
-          {rowContent}
-        </Link>
-      </motion.div>
-    )
-  }
-
-  return (
-    <motion.div
-      {...motionProps}
-      style={{
-        ...ROW_BASE_STYLE,
-        cursor: 'default',
-      }}
-    >
-      {rowContent}
     </motion.div>
   )
 }
