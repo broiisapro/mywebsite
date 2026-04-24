@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
+import { useRef } from 'react'
 import Link from 'next/link'
-import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
 import { projects, type Project } from '@/data/portfolio'
 
 const AI_TAG_RE = /ai|llm|cv|voice|fine.?tun|claude|gpt|vision/i
@@ -143,22 +143,12 @@ export default function Work() {
   )
 }
 
-const tooltipStyle: React.CSSProperties = {
-  position: 'absolute',
-  top: 'calc(100% + 4px)',
-  left: '50%',
-  transform: 'translateX(-50%)',
+const iconLabelStyle = {
   fontFamily: 'var(--font-mono)',
   fontSize: 9,
   letterSpacing: '0.08em',
-  textTransform: 'uppercase',
+  textTransform: 'uppercase' as const,
   color: 'var(--ink3)',
-  whiteSpace: 'nowrap',
-  background: 'var(--bg)',
-  border: '0.5px solid var(--border)',
-  borderRadius: 3,
-  padding: '2px 6px',
-  pointerEvents: 'none',
 }
 
 function ProjectRow({
@@ -170,9 +160,6 @@ function ProjectRow({
   index: number
   inView: boolean
 }) {
-  const [ghHovered, setGhHovered] = useState(false)
-  const [blogHovered, setBlogHovered] = useState(false)
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -307,80 +294,58 @@ function ProjectRow({
       </div>
 
       {/* Right: icon pair */}
-      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 10 }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-start', gap: 14 }}>
         {project.github && (
-          <div
-            style={{ position: 'relative' }}
-            onMouseEnter={() => setGhHovered(true)}
-            onMouseLeave={() => setGhHovered(false)}
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${project.name} on GitHub`}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 4,
+              padding: 8,
+              color: 'var(--ink3)',
+              textDecoration: 'none',
+              transition: 'color 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              ;(e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink)'
+            }}
+            onMouseLeave={(e) => {
+              ;(e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink3)'
+            }}
           >
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${project.name} on GitHub`}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: 8,
-                color: ghHovered ? 'var(--ink)' : 'var(--ink3)',
-                textDecoration: 'none',
-                transition: 'color 0.2s ease',
-              }}
-            >
-              <GitHubIcon />
-            </a>
-            <AnimatePresence>
-              {ghHovered && (
-                <motion.span
-                  initial={{ opacity: 0, y: -2 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -2 }}
-                  transition={{ duration: 0.15 }}
-                  style={tooltipStyle}
-                >
-                  GitHub
-                </motion.span>
-              )}
-            </AnimatePresence>
-          </div>
+            <GitHubIcon />
+            <span style={iconLabelStyle}>GitHub</span>
+          </a>
         )}
         {project.blogSlug && (
-          <div
-            style={{ position: 'relative' }}
-            onMouseEnter={() => setBlogHovered(true)}
-            onMouseLeave={() => setBlogHovered(false)}
+          <Link
+            href={`/blog/${project.blogSlug}`}
+            aria-label={`${project.name} case study`}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 4,
+              padding: 8,
+              color: 'var(--ink3)',
+              textDecoration: 'none',
+              transition: 'color 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              ;(e.currentTarget as HTMLAnchorElement).style.color = 'var(--acc)'
+            }}
+            onMouseLeave={(e) => {
+              ;(e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink3)'
+            }}
           >
-            <Link
-              href={`/blog/${project.blogSlug}`}
-              aria-label={`${project.name} case study`}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: 8,
-                color: blogHovered ? 'var(--acc)' : 'var(--ink3)',
-                textDecoration: 'none',
-                transition: 'color 0.2s ease',
-              }}
-            >
-              <BlogIcon />
-            </Link>
-            <AnimatePresence>
-              {blogHovered && (
-                <motion.span
-                  initial={{ opacity: 0, y: -2 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -2 }}
-                  transition={{ duration: 0.15 }}
-                  style={tooltipStyle}
-                >
-                  Case study
-                </motion.span>
-              )}
-            </AnimatePresence>
-          </div>
+            <BlogIcon />
+            <span style={iconLabelStyle}>Case study</span>
+          </Link>
         )}
       </div>
     </motion.div>
