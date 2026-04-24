@@ -1,7 +1,8 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import React, { useRef, useState } from 'react'
+import Link from 'next/link'
+import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { projects, type Project } from '@/data/portfolio'
 
 const AI_TAG_RE = /ai|llm|cv|voice|fine.?tun|claude|gpt|vision/i
@@ -16,6 +17,19 @@ const GitHubIcon = () => (
     style={{ display: 'block', flexShrink: 0 }}
   >
     <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+  </svg>
+)
+
+const BlogIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="currentColor"
+    aria-hidden="true"
+    style={{ display: 'block', flexShrink: 0 }}
+  >
+    <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5zM4.5 8a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zm0 2.5a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zm0 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1z"/>
   </svg>
 )
 
@@ -57,7 +71,7 @@ export default function Work() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: '2.5fr 1.5fr 48px',
+          gridTemplateColumns: '2.5fr 1.5fr 80px',
           padding: '0 0 10px',
           borderBottom: '2px solid var(--ink)',
         }}
@@ -129,6 +143,24 @@ export default function Work() {
   )
 }
 
+const tooltipStyle: React.CSSProperties = {
+  position: 'absolute',
+  top: 'calc(100% + 4px)',
+  left: '50%',
+  transform: 'translateX(-50%)',
+  fontFamily: 'var(--font-mono)',
+  fontSize: 9,
+  letterSpacing: '0.08em',
+  textTransform: 'uppercase',
+  color: 'var(--ink3)',
+  whiteSpace: 'nowrap',
+  background: 'var(--bg)',
+  border: '0.5px solid var(--border)',
+  borderRadius: 3,
+  padding: '2px 6px',
+  pointerEvents: 'none',
+}
+
 function ProjectRow({
   project,
   index,
@@ -138,6 +170,9 @@ function ProjectRow({
   index: number
   inView: boolean
 }) {
+  const [ghHovered, setGhHovered] = useState(false)
+  const [blogHovered, setBlogHovered] = useState(false)
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -146,7 +181,7 @@ function ProjectRow({
       className="project-row"
       style={{
         display: 'grid',
-        gridTemplateColumns: '2.5fr 1.5fr 48px',
+        gridTemplateColumns: '2.5fr 1.5fr 80px',
         alignItems: 'center',
         borderBottom: '1px solid var(--border)',
         padding: '16px 0',
@@ -169,18 +204,47 @@ function ProjectRow({
     >
       {/* Left: name + description + badge */}
       <div>
-        <span
-          style={{
-            fontFamily: 'var(--font-syne)',
-            fontWeight: 700,
-            fontSize: 15,
-            letterSpacing: '-0.01em',
-            color: 'var(--ink)',
-            display: 'block',
-          }}
-        >
-          {project.name}
-        </span>
+        {project.blogSlug ? (
+          <Link
+            href={`/blog/${project.blogSlug}`}
+            style={{
+              fontFamily: 'var(--font-syne)',
+              fontWeight: 700,
+              fontSize: 15,
+              letterSpacing: '-0.01em',
+              color: 'var(--ink)',
+              display: 'inline',
+              textDecoration: 'none',
+              transition: 'color 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget as HTMLAnchorElement
+              el.style.color = 'var(--acc)'
+              el.style.textDecoration = 'underline'
+              el.style.textUnderlineOffset = '3px'
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLAnchorElement
+              el.style.color = 'var(--ink)'
+              el.style.textDecoration = 'none'
+            }}
+          >
+            {project.name}
+          </Link>
+        ) : (
+          <span
+            style={{
+              fontFamily: 'var(--font-syne)',
+              fontWeight: 700,
+              fontSize: 15,
+              letterSpacing: '-0.01em',
+              color: 'var(--ink)',
+              display: 'block',
+            }}
+          >
+            {project.name}
+          </span>
+        )}
         <span
           className="project-desc"
           style={{
@@ -242,34 +306,82 @@ function ProjectRow({
         })}
       </div>
 
-      {/* Right: GitHub link (if available) */}
-      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-        {project.github ? (
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${project.name} on GitHub`}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: 32,
-              height: 32,
-              color: 'var(--ink3)',
-              textDecoration: 'none',
-              transition: 'color 0.2s ease',
-            }}
-            onMouseEnter={(e) => {
-              ;(e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink)'
-            }}
-            onMouseLeave={(e) => {
-              ;(e.currentTarget as HTMLAnchorElement).style.color = 'var(--ink3)'
-            }}
+      {/* Right: icon pair */}
+      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 10 }}>
+        {project.github && (
+          <div
+            style={{ position: 'relative' }}
+            onMouseEnter={() => setGhHovered(true)}
+            onMouseLeave={() => setGhHovered(false)}
           >
-            <GitHubIcon />
-          </a>
-        ) : null}
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${project.name} on GitHub`}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 8,
+                color: ghHovered ? 'var(--ink)' : 'var(--ink3)',
+                textDecoration: 'none',
+                transition: 'color 0.2s ease',
+              }}
+            >
+              <GitHubIcon />
+            </a>
+            <AnimatePresence>
+              {ghHovered && (
+                <motion.span
+                  initial={{ opacity: 0, y: -2 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -2 }}
+                  transition={{ duration: 0.15 }}
+                  style={tooltipStyle}
+                >
+                  GitHub
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
+        {project.blogSlug && (
+          <div
+            style={{ position: 'relative' }}
+            onMouseEnter={() => setBlogHovered(true)}
+            onMouseLeave={() => setBlogHovered(false)}
+          >
+            <Link
+              href={`/blog/${project.blogSlug}`}
+              aria-label={`${project.name} case study`}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 8,
+                color: blogHovered ? 'var(--acc)' : 'var(--ink3)',
+                textDecoration: 'none',
+                transition: 'color 0.2s ease',
+              }}
+            >
+              <BlogIcon />
+            </Link>
+            <AnimatePresence>
+              {blogHovered && (
+                <motion.span
+                  initial={{ opacity: 0, y: -2 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -2 }}
+                  transition={{ duration: 0.15 }}
+                  style={tooltipStyle}
+                >
+                  Case study
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
       </div>
     </motion.div>
   )
