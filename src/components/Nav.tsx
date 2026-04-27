@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 const navLinks = [
   { label: 'Work', href: '/#work' },
+  { label: 'Projects', href: '/projects' },
   { label: 'Blog', href: '/blog' },
   { label: 'About', href: '/#about' },
   { label: 'Contact', href: '/#contact' },
@@ -215,14 +216,6 @@ export default function Nav() {
         )}
       </AnimatePresence>
 
-      <style>{`
-        @media (max-width: 640px) {
-          nav > div:first-child {
-            padding-left: 24px !important;
-            padding-right: 24px !important;
-          }
-        }
-      `}</style>
     </nav>
   )
 }

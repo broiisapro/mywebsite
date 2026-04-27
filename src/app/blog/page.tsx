@@ -11,7 +11,8 @@ export const metadata: Metadata = {
 }
 
 export default function BlogIndex() {
-  const postSummaries = blogPosts.map(({ slug, title, tag, excerpt, date }) => ({
+  const realPosts = blogPosts.filter((p) => !p.placeholder)
+  const postSummaries = realPosts.map(({ slug, title, tag, excerpt, date }) => ({
     slug,
     title,
     tag,
@@ -56,7 +57,7 @@ export default function BlogIndex() {
               textTransform: 'uppercase',
             }}
           >
-            {blogPosts.length} posts
+            {realPosts.length} posts
           </span>
         </div>
 

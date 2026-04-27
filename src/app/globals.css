@@ -130,3 +130,11 @@ body {
     display: none !important;
   }
 }
+
+/* ─── Responsive: nav padding on mobile ─────────────────────── */
+@media (max-width: 640px) {
+  nav > div:first-child {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}

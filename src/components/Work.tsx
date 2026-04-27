@@ -3,7 +3,7 @@
 import React, { useRef, useState } from 'react'
 import Link from 'next/link'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
-import { projects, type Project } from '@/data/portfolio'
+import { featuredProjects, type Project } from '@/data/portfolio'
 
 const AI_TAG_RE = /ai|llm|cv|voice|fine.?tun|claude|gpt|vision/i
 
@@ -30,6 +30,19 @@ const BlogIcon = () => (
     style={{ display: 'block', flexShrink: 0 }}
   >
     <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5zM4.5 8a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zm0 2.5a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zm0 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1z"/>
+  </svg>
+)
+
+const LockIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="currentColor"
+    aria-hidden="true"
+    style={{ display: 'block', flexShrink: 0 }}
+  >
+    <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
   </svg>
 )
 
@@ -64,7 +77,7 @@ export default function Work() {
           marginBottom: 24,
         }}
       >
-        Selected work · {projects.length} projects
+        Selected work · {featuredProjects.length} projects
       </motion.div>
 
       {/* Column headers */}
@@ -95,7 +108,7 @@ export default function Work() {
 
       {/* Project rows */}
       <div>
-        {projects.map((project, i) => (
+        {featuredProjects.map((project, i) => (
           <ProjectRow key={project.name} project={project} index={i} inView={inView} />
         ))}
       </div>
@@ -107,7 +120,7 @@ export default function Work() {
         transition={{ duration: 0.5, delay: 0.5 }}
         style={{ marginTop: 28 }}
       >
-        <a
+        <Link
           href="/projects"
           style={{
             fontFamily: 'var(--font-instrument)',
@@ -130,7 +143,7 @@ export default function Work() {
           }}
         >
           View all projects →
-        </a>
+        </Link>
       </motion.div>
 
       <style>{`
@@ -204,9 +217,9 @@ function ProjectRow({
     >
       {/* Left: name + description + badge */}
       <div>
-        {project.blogSlug ? (
+        {project.blogPost ? (
           <Link
-            href={`/blog/${project.blogSlug}`}
+            href={`/blog/${project.blogSlug ?? project.slug}`}
             style={{
               fontFamily: 'var(--font-syne)',
               fontWeight: 700,
@@ -308,7 +321,39 @@ function ProjectRow({
 
       {/* Right: icon pair */}
       <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 10 }}>
-        {project.github && (
+        {project.private ? (
+          <div
+            style={{ position: 'relative' }}
+            onMouseEnter={() => setGhHovered(true)}
+            onMouseLeave={() => setGhHovered(false)}
+          >
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 8,
+                color: 'var(--ink3)',
+                cursor: 'default',
+              }}
+            >
+              <LockIcon />
+            </span>
+            <AnimatePresence>
+              {ghHovered && (
+                <motion.span
+                  initial={{ opacity: 0, y: -2 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -2 }}
+                  transition={{ duration: 0.15 }}
+                  style={tooltipStyle}
+                >
+                  Private
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </div>
+        ) : project.github ? (
           <div
             style={{ position: 'relative' }}
             onMouseEnter={() => setGhHovered(true)}
@@ -345,15 +390,15 @@ function ProjectRow({
               )}
             </AnimatePresence>
           </div>
-        )}
-        {project.blogSlug && (
+        ) : null}
+        {project.blogPost && (
           <div
             style={{ position: 'relative' }}
             onMouseEnter={() => setBlogHovered(true)}
             onMouseLeave={() => setBlogHovered(false)}
           >
             <Link
-              href={`/blog/${project.blogSlug}`}
+              href={`/blog/${project.blogSlug ?? project.slug}`}
               aria-label={`${project.name} case study`}
               style={{
                 display: 'inline-flex',

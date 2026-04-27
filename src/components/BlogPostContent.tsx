@@ -97,11 +97,58 @@ export default function BlogPostContent({
       </div>
 
       {/* Post content */}
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {post.content.map((section, i) => (
-          <ContentBlock key={i} section={section} />
-        ))}
-      </div>
+      {post.placeholder ? (
+        <div
+          style={{
+            border: '1px solid var(--border)',
+            borderRadius: 6,
+            padding: '40px 36px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 12,
+          }}
+        >
+          <span
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: 10,
+              textTransform: 'uppercase',
+              letterSpacing: '0.12em',
+              color: 'var(--acc)',
+            }}
+          >
+            Case study
+          </span>
+          <p
+            style={{
+              fontFamily: 'var(--font-syne)',
+              fontWeight: 700,
+              fontSize: 22,
+              color: 'var(--ink)',
+              margin: 0,
+            }}
+          >
+            Coming soon
+          </p>
+          <p
+            style={{
+              fontFamily: 'var(--font-instrument)',
+              fontSize: 15,
+              lineHeight: 1.8,
+              color: 'var(--ink3)',
+              margin: 0,
+            }}
+          >
+            The full write-up for this project is being written. Check back soon.
+          </p>
+        </div>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {post.content.map((section, i) => (
+            <ContentBlock key={i} section={section} />
+          ))}
+        </div>
+      )}
 
       {/* Footer CTAs */}
       <div
