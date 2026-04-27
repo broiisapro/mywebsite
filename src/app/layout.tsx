@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Syne, Instrument_Sans, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
+import CustomCursor from '@/components/CustomCursor'
 
 const syne = Syne({
   subsets: ['latin'],
@@ -56,7 +57,10 @@ export default function RootLayout({
       lang="en"
       className={`${syne.variable} ${instrumentSans.variable} ${jetbrainsMono.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <CustomCursor />
+        {children}
+      </body>
     </html>
   )
 }
