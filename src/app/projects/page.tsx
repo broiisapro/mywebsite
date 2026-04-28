@@ -193,7 +193,7 @@ function RowIconPair({ project }: { project: (typeof projects)[number] }) {
           <span
             style={{
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-              padding: 7, color: lockHovered ? 'var(--ink2)' : 'var(--ink3)', transition: 'color 0.2s ease', cursor: 'default',
+              padding: 7, color: lockHovered ? 'var(--ink2)' : 'var(--ink3)', transition: 'color 0.2s ease',
             }}
           >
             <LockIcon />
@@ -603,7 +603,6 @@ export default function ProjectsPage() {
                   transform: 'translateY(-50%)',
                   background: 'none',
                   border: 'none',
-                  cursor: 'pointer',
                   color: 'var(--ink3)',
                   fontSize: 14,
                   lineHeight: 1,
@@ -634,7 +633,6 @@ export default function ProjectsPage() {
                     background: isActive ? 'var(--ink)' : 'var(--bg2)',
                     border: `0.5px solid ${isActive ? 'var(--ink)' : 'var(--border)'}`,
                     color: isActive ? 'var(--bg)' : 'var(--ink3)',
-                    cursor: 'pointer',
                     transition: 'all 0.15s ease',
                   }}
                   onMouseEnter={e => {
