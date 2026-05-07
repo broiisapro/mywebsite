@@ -144,7 +144,7 @@ export default function Nav() {
             background: 'transparent',
             border: 'none',
             padding: 0,
-            cursor: 'pointer',
+
           }}
         >
           {[0, 1, 2].map((i) => (

@@ -35,8 +35,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-html.custom-cursor-active,
-html.custom-cursor-active * {
+*,
+*::before,
+*::after {
   cursor: none !important;
 }
 

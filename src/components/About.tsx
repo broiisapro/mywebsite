@@ -157,7 +157,7 @@ function SkillPill({ label }: { label: string }) {
         border: '0.5px solid var(--border)',
         borderRadius: 4,
         transition: 'background 0.2s ease, border-color 0.2s ease',
-        cursor: 'default',
+
         display: 'inline-block',
       }}
       onMouseEnter={(e) => {

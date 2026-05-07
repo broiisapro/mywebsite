@@ -334,7 +334,7 @@ function ProjectRow({
                 justifyContent: 'center',
                 padding: 8,
                 color: 'var(--ink3)',
-                cursor: 'default',
+
               }}
             >
               <LockIcon />
